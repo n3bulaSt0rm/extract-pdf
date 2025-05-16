@@ -318,7 +318,7 @@ def main():
         input_path=input_pdf,
         output_path=output_txt,
         strategy="hi_res",
-        include_page_breaks=True,
+        include_page_breaks=False,
         language="vie",  # Set Vietnamese as the language
         use_ocr=True,    # Enable OCR for better accuracy
     )
