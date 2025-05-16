@@ -1,0 +1,9 @@
+========== PDF EXTRACTION EVALUATION METRICS ==========
+character_accuracy: 94.65%
+exact_line_match_percentage: 51.78%
+similar_line_match_percentage: 60.67%
+word_recall: 97.79%
+word_precision: 98.57%
+word_f1: 98.18%
+length_ratio: 99.89%
+line_count_ratio: 72.22%
