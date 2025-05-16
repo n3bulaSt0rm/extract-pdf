@@ -1,0 +1,26 @@
+Text Processing Evaluation Results
+================================
+
+original_characters: 76193
+processed_characters: 190
+character_reduction: 76003
+character_reduction_percent: 99.75
+original_lines: 602
+processed_lines: 7
+line_reduction: 595
+line_reduction_percent: 98.84
+original_words: 16389
+processed_words: 42
+word_difference: -16347
+word_difference_percent: -99.74
+special_chars_removed: 80
+detected_ocr_errors: 244
+short_lines_reduction: 100
+diacritic_marks_difference: 0
+
+Top OCR corrections:
+  - đào tạo → đào tạo: 93 occurrences
+  - kết quả → kết quả: 45 occurrences
+  - nghiên cứu → nghiên cứu: 35 occurrences
+  - Giáo dục → giáo dục: 22 occurrences
+  - ĐÀO TẠO → đào tạo: 12 occurrences
