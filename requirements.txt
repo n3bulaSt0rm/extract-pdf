@@ -1,16 +1,19 @@
-pyvi==0.1.1
-nltk>=3.8.1
-sentence-transformers==2.2.2
-huggingface-hub==0.12.1
-qdrant-client==1.4.0
-torch>=1.13.0
-transformers>=4.25.1
-protobuf==5.26.1
-pandas>=1.5.0
-matplotlib>=3.6.0
-numpy>=1.24.0
-docling>=0.5.0
-tqdm>=4.64.1
-openai>=1.1.0
-requests>=2.31.0
-google-generativeai>=0.3.0
+# CUDA 12.1 requirements
+torch==2.3.0+cu121
+torchvision==0.18.0+cu121
+torchaudio==2.3.0+cu121
+--find-links https://download.pytorch.org/whl/cu121/torch_stable.html
+
+# Docling requirements
+docling==2.32.0
+docling-ibm-models==3.4.3
+
+# Fix compatibility issues
+numpy==1.26.4  # Phiên bản đúng để tránh lỗi tương thích
+
+# Additional requirements for PDF processing
+regex
+pandas
+pillow
+tqdm
+pdf2image==1.17.0  # Chuyển đổi PDF thành hình ảnh
