@@ -1,0 +1,16 @@
+========== DETAILED PDF EXTRACTION METRICS ==========
+
+character_accuracy: 94.71%
+length_ratio: 95.72%
+line_count_ratio: 99.78%
+line_match_100pct: 15.78%
+line_match_50pct: 99.56%
+line_match_70pct: 99.11%
+line_match_80pct: 98.89%
+line_match_90pct: 94.67%
+line_match_95pct: 64.00%
+missing_line_breaks: 1.00%
+punctuation_accuracy: 100.00%
+word_f1: 94.51%
+word_precision: 94.38%
+word_recall: 94.64%

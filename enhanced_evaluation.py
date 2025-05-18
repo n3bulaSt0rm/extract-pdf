@@ -12,8 +12,8 @@ from collections import Counter
 from sklearn.metrics import confusion_matrix
 from typing import Dict, List, Tuple, Set
 
-# Import from our main.py file
-from main import extract_text_from_pdf
+# Remove import from main.py
+# from main import extract_text_from_pdf
 
 def normalize_text(text: str) -> str:
     """Normalize text for more accurate comparison"""
@@ -241,47 +241,43 @@ def analyze_errors(reference_text: str, extracted_text: str, output_path: str):
             ext_short = ext[:47] + "..." if len(ext) > 50 else ext
             f.write(f"{score:.2f}  {ref_short:<50} | {ext_short:<50}\n")
 
-def enhanced_evaluate_extraction():
+def evaluate_extraction(reference_file, extracted_file, output_dir=None):
     """
-    Enhanced evaluation of PDF extraction with detailed metrics and visualizations
+    Evaluate text extraction by comparing extracted text with a reference text
+    
+    Args:
+        reference_file (str): Path to the reference text file
+        extracted_file (str): Path to the extracted text file
+        output_dir (str, optional): Directory to save evaluation results
     """
-    # Paths
-    input_pdf = r"d:\DATN_HUST\test\sample2.pdf"
-    output_txt = r"d:\DATN_HUST\test\output\output2.txt"
-    reference_txt = r"d:\DATN_HUST\test\sample2.txt"
+    # Set default output directory if not provided
+    if not output_dir:
+        output_dir = os.path.dirname(extracted_file)
+    
+    os.makedirs(output_dir, exist_ok=True)
     
     # Output files for analysis
-    detailed_metrics_path = r"d:\DATN_HUST\test\output\detailed_metrics2.txt"
-    comparison_path = r"d:\DATN_HUST\test\output\comparison2.html"
-    error_analysis_path = r"d:\DATN_HUST\test\output\error_analysis2.txt"
+    detailed_metrics_path = os.path.join(output_dir, "detailed_metrics.txt")
+    comparison_path = os.path.join(output_dir, "comparison.html")
+    error_analysis_path = os.path.join(output_dir, "error_analysis.txt")
     
-    print(f"Starting enhanced evaluation...")
+    print(f"Starting evaluation...")
     start_time = time.time()
     
-    # Extract text from PDF (if output doesn't exist)
-    if not os.path.exists(output_txt):
-        print(f"Processing PDF: {input_pdf}")
-        extract_text_from_pdf(
-            input_path=input_pdf,
-            output_path=output_txt,
-            strategy="hi_res",
-            include_page_breaks=True,
-            language="vie",
-            use_ocr=True,
-        )
-    else:
-        print(f"Using existing output file: {output_txt}")
-    
     # Read reference text
-    if not os.path.exists(reference_txt):
-        print(f"ERROR: Reference file not found: {reference_txt}")
+    if not os.path.exists(reference_file):
+        print(f"ERROR: Reference file not found: {reference_file}")
         return
     
-    with open(reference_txt, 'r', encoding='utf-8') as f:
+    with open(reference_file, 'r', encoding='utf-8') as f:
         reference_text = f.read()
     
     # Read extracted text
-    with open(output_txt, 'r', encoding='utf-8') as f:
+    if not os.path.exists(extracted_file):
+        print(f"ERROR: Extracted file not found: {extracted_file}")
+        return
+    
+    with open(extracted_file, 'r', encoding='utf-8') as f:
         extracted_text = f.read()
     
     # Calculate detailed metrics
@@ -296,7 +292,7 @@ def enhanced_evaluate_extraction():
     analyze_errors(reference_text, extracted_text, error_analysis_path)
     
     # Report results
-    print("\n========== ENHANCED EVALUATION RESULTS ==========")
+    print("\n========== EVALUATION RESULTS ==========")
     print(f"Character-level accuracy: {metrics['character_accuracy']:.2f}%")
     print(f"Word recall: {metrics['word_recall']:.2f}%")
     print(f"Word precision: {metrics['word_precision']:.2f}%")
@@ -321,6 +317,13 @@ def enhanced_evaluate_extraction():
     print(f"Side-by-side comparison saved to: {comparison_path}")
     print(f"Error analysis saved to: {error_analysis_path}")
     print(f"Evaluation completed in {time.time() - start_time:.2f} seconds")
+    
+    return metrics
 
 if __name__ == "__main__":
-    enhanced_evaluate_extraction() 
+    # Example usage
+    reference_file = r"d:\DATN_HUST\test\sample.txt"
+    extracted_file = r"d:\DATN_HUST\test\output\output.txt"
+    output_dir = r"d:\DATN_HUST\test\output"
+    
+    evaluate_extraction(reference_file, extracted_file, output_dir) 

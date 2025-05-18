@@ -1,80 +1,93 @@
-# PDF Processor with Table Detection and Section Chunking
+# Trích xuất văn bản tiếng Việt từ PDF (Extract Vietnamese Text from PDF)
 
-Công cụ trích xuất văn bản, bảng biểu từ tài liệu PDF (bao gồm cả PDF scan) và chia thành các phần dựa trên cấu trúc điều, mục. Bảng biểu được chuyển đổi sang định dạng Markdown.
+## Tiếng Việt
 
-## Tính năng chính
+Công cụ này giúp trích xuất văn bản tiếng Việt từ các file PDF, bao gồm cả PDF scan và PDF có bảng biểu, sử dụng thư viện Docling.
 
-- Trích xuất văn bản từ PDF thông thường và PDF scan
-- Phát hiện và trích xuất bảng biểu trong PDF
-- Chuyển đổi bảng thành định dạng Markdown
-- Duy trì vị trí tương đối của bảng trong tài liệu
-- Chia văn bản thành các phần dựa trên "Điều X", "Mục X", "Phần X"
-- Hỗ trợ tiếng Việt với xử lý OCR tối ưu
+### Yêu cầu
 
-## Yêu cầu hệ thống
+- Python 3.8+
+- Thư viện Docling
 
-- Python 3.7+
-- Tesseract OCR v5.0+ (với dữ liệu tiếng Việt)
-- Poppler
+### Cài đặt
 
-## Cài đặt
-
-1. Cài đặt Tesseract OCR:
-   - Windows: Tải và cài đặt từ [https://github.com/UB-Mannheim/tesseract/wiki](https://github.com/UB-Mannheim/tesseract/wiki)
-   - Đảm bảo cài đặt dữ liệu ngôn ngữ tiếng Việt (vie.traineddata)
-
-2. Cài đặt Poppler:
-   - Windows: Tải và cài đặt từ [https://github.com/oschwartz10612/poppler-windows/releases](https://github.com/oschwartz10612/poppler-windows/releases)
-
-3. Cài đặt các thư viện Python:
-   ```
-   pip install -r requirements.txt
-   ```
-
-4. Điều chỉnh đường dẫn trong mã:
-   - Mở file `main.py` và cập nhật đường dẫn Tesseract và Poppler nếu cần
-
-## Sử dụng
-
-1. Đặt file PDF vào thư mục `data/pdf`
-2. Chỉnh sửa danh sách `files_to_process` trong `main.py` để chỉ định:
-   - Đường dẫn file PDF đầu vào
-   - Đường dẫn file văn bản đầu ra
-   - Loại PDF (scan hay không)
-
-3. Chạy chương trình:
-   ```
-   python main.py
-   ```
-
-4. Kết quả:
-   - File văn bản đầy đủ trong thư mục `output`
-   - Các chunk được chia nhỏ trong thư mục `output/[tên_file]_chunks`
-   - Thông tin metadata về các chunk trong file `chunks_metadata.json`
-
-## Ví dụ kết quả
-
-Đối với mỗi tài liệu, chương trình sẽ tạo:
-
-1. File văn bản đầy đủ với bảng biểu trong định dạng Markdown
-2. Thư mục chứa các chunk theo điều/mục
-3. File metadata chứa thông tin về mỗi chunk
-
-Ví dụ nội dung chunk:
-
+1. Kích hoạt môi trường ảo:
 ```
-Điều 1: Phạm vi điều chỉnh
+# Windows
+.venv\Scripts\activate
 
-Thông tư này quy định việc...
-
-| STT | Nội dung | Ghi chú |
-| --- | -------- | ------- |
-| 1   | Mục A    | Chi tiết|
-| 2   | Mục B    | Chi tiết|
+# Linux/Mac
+source .venv/bin/activate
 ```
 
-## Tùy chỉnh
+2. Cài đặt các gói cần thiết:
+```
+pip install -r requirements.txt
+```
 
-- Điều chỉnh DPI ảnh trong hàm `pdf_to_images()` để cân bằng chất lượng và hiệu suất
-- Thay đổi mẫu phát hiện điều/mục trong hàm `chunk_by_sections()` để phù hợp với cấu trúc tài liệu
-- Tối ưu tham số OCR trong hàm `extract_text_from_image()` cho kết quả tốt hơn 
+### Sử dụng
+
+Trích xuất từ một file PDF đơn lẻ:
+```
+python extract_vietnamese_pdf.py đường_dẫn_đến_file.pdf
+```
+
+Trích xuất từ tất cả các file PDF trong một thư mục:
+```
+python extract_vietnamese_pdf.py đường_dẫn_đến_thư_mục
+```
+
+Các tùy chọn:
+- `-o`, `--output`: Thư mục đầu ra (mặc định: cùng thư mục với file đầu vào)
+- `-f`, `--format`: Định dạng đầu ra (markdown, html, json) (mặc định: markdown)
+
+Ví dụ:
+```
+python extract_vietnamese_pdf.py tài_liệu.pdf -o kết_quả -f html
+```
+
+## English
+
+This tool helps extract Vietnamese text from PDF files, including scanned PDFs and PDFs with tables, using the Docling library.
+
+### Requirements
+
+- Python 3.8+
+- Docling library
+
+### Installation
+
+1. Activate the virtual environment:
+```
+# Windows
+.venv\Scripts\activate
+
+# Linux/Mac
+source .venv/bin/activate
+```
+
+2. Install required packages:
+```
+pip install -r requirements.txt
+```
+
+### Usage
+
+Extract from a single PDF file:
+```
+python extract_vietnamese_pdf.py path_to_file.pdf
+```
+
+Extract from all PDF files in a directory:
+```
+python extract_vietnamese_pdf.py path_to_directory
+```
+
+Options:
+- `-o`, `--output`: Output directory (default: same as input)
+- `-f`, `--format`: Output format (markdown, html, json) (default: markdown)
+
+Example:
+```
+python extract_vietnamese_pdf.py document.pdf -o results -f html
+``` 

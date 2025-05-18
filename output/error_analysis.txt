@@ -1,0 +1,117 @@
+=============== PDF EXTRACTION ERROR ANALYSIS ===============
+
+TOP 20 MISSING WORDS (in reference but not in extracted):
+  - ________________________________________
+  - khách
+  - giành
+  - quát
+  - soát
+  - dành
+  - chào
+  - ràng
+  - tách
+  - cánh
+  - điêu
+  - lành
+  - khám
+  - sách
+  - giám
+  - sáng
+  - đinh
+  - đươc
+  - trái
+  - hoàn
+
+TOP 20 ADDED WORDS (in extracted but not in reference):
+  - gianh
+  - trach
+  - nganh
+  - nhanh
+  - ngoai
+  - khach
+  - toan
+  - quat
+  - sach
+  - canh
+  - hoan
+  - rang
+  - trai
+  - chao
+  - hanh
+  - soat
+  - phap
+  - kham
+  - khac
+  - sang
+
+TOP 20 WORDS WITH DIFFERENT FREQUENCIES:
+WORD                 REF COUNT  EXT COUNT  DIFF      
+--------------------------------------------------
+giá                  539        71         468       
+gia                  11         479        -468      
+hàng                 162        5          157       
+hang                 1          158        -157      
+pháp                 116        9          107       
+và                   111        17         94        
+nhà                  108        20         88        
+các                  77         4          73        
+hành                 85         29         56        
+tài                  52         2          50        
+tai                  6          54         -48       
+nay                  2          43         -41       
+ban                  24         65         -41       
+thành                47         6          41        
+thanh                13         54         -41       
+này                  70         29         41        
+bán                  42         3          39        
+cá                   39         3          36        
+trách                32         7          25        
+báo                  21         4          17        
+
+SAMPLE CHARACTER SUBSTITUTIONS:
+REF   EXT   REF CONTEXT     EXT CONTEXT    
+--------------------------------------------------
+c     s     ---- cộng       ---- số: 1     
+ộ     ố     --- cộng h      --- số: 19     
+n     :     -- cộng hò      -- số: 19v     
+g           - cộng hòa      - số: 19vb     
+      1      cộng hòa        số: 19vbh     
+h     9     cộng hòa x      số: 19vbhn     
+ò     v     ộng hòa xã      ố: 19vbhn-     
+a     b     ng hòa xã       : 19vbhn-v     
+      h     g hòa xã h       19vbhn-vp     
+x     n      hòa xã hộ      19vbhn-vpq     
+ã     -     hòa xã hội      9vbhn-vpqh     
+      v     òa xã hội       vbhn-vpqh      
+h     p     a xã hội c      bhn-vpqh c     
+ộ     q      xã hội ch      hn-vpqh cộ     
+i     h     xã hội chủ      n-vpqh cộn     
+h     ộ     hội chủ ng      pqh cộng h     
+ủ     n     ội chủ ngh      qh cộng hò     
+      g     i chủ nghĩ      h cộng hòa     
+n            chủ nghĩa       cộng hòa      
+g     h     chủ nghĩa       cộng hòa x     
+
+SAMPLE SIMILAR BUT NOT EXACT LINE MATCHES:
+SCORE  REF LINE                                           | EXT LINE                                          
+-----------------------------------------------------------------------------------------------------------
+0.65  --------	CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM        | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự...
+0.61  Độc lập - Tự do - Hạnh phúc                        | CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM Độc lập - Tự...
+0.79  Số: 19/VBHN-VPQH	Hà Nội, ngày 15 tháng 7 năm 2020  | Hà Nội, ngày 15 tháng 7 năm 2020                  
+0.97  Luật Giá số 11/2012/QH13 ngày 20 tháng 6 nă... | Luật Giá số 11/2012/QH13 ngày 20 tháng 6 năm...
+0.95  1. Luật số 61/2014/QH13 ngày 21 tháng 11 năm 20... | - 1. Luật số 61/2014/QH13 ngày 21 tháng 11 nă...
+0.94  2. Luật Đầu tư theo phương thức đối tác công tư... | - 2. Luật Đầu tư theo phương thức đối tác công...
+0.97  Quốc hội ban hành Luật Giá[1].                     | Quốc hội ban hành Luật Giá [1] .                  
+0.93  Luật này quy định về quyền và nghĩa vụ của tổ c... | Luật này quy định về quyền và nghĩa vụ của tổ...
+0.95  Tổ chức, cá nhân sản xuất, kinh doanh; người ti... | Tổ chức, cá nhân sản xuất, kinh doanh; người t...
+0.94  1. Các hoạt động trong lĩnh vực giá trên lãnh t... | - 1. Các hoạt động trong lĩnh vực giá trên lã...
+0.94  2. Trường hợp điều ước quốc tế mà nước Cộng hòa... | - 2. Trường hợp điều ước quốc tế mà nước Cộng ...
+0.95  Trong Luật này, các từ ngữ dưới đây được hiểu n... | Trong Luật này, các từ ngữ dưới đây được hiểu...
+0.95  1. Hàng hóa là tài sản có thể trao đổi, mua, bá... | - 1. Hàng hóa là tài sản có thể trao đổi, mua...
+0.93  2. Dịch vụ là hàng hóa có tính vô hình, quá trì... | - 2. Dịch vụ là hàng hóa có tính vô hình, qua...
+0.97  3. Hàng hóa, dịch vụ thiết yếu là những hàng hó... | - 3. Hàng hóa, dịch vụ thiết yếu là những hàn...
+0.94  4. Giá thị trường là giá hàng hóa, dịch vụ hình... | - 4. Giá thị trường là giá hàng hóa, dịch vụ...
+0.94  5. Định giá là việc cơ quan nhà nước có thẩm qu... | - 5. Định giá là việc cơ quan nhà nước có thẩ...
+0.84  6. Niêm yết giá là việc tổ chức, cá nhân sản xu... | - 6. Niêm yết giá là việc tổ chức, cá nhân sả...
+0.93  7. Hiệp thương giá là việc cơ quan nhà nước có ... | - 7. Hiệp thương giá là việc cơ quan nhà nước...
+0.91  8. Đăng ký giá là việc tổ chức, cá nhân sản xuấ... | - 8. Đăng ký giá là việc tổ chức, cá nhân sản...

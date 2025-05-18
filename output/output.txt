@@ -1,44 +1,118 @@
-CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM     Độc lập - Tự do - Hạnh phúc     Số: 19 VBHN-VPQH
-VĂN PHÒNG QUỐC HỘI
-Hà Nội, ngày 15/7/2020
-LUẬT
-GIÁ
-Luật Giá số 11/2012/QH13 ngày 20/6/2012 của Quốc hội, có hiệu lực kể từ ngày 01/01/2013, được sửa đổi, bổ sung bởi:
-1. Luật số 61/2014/QH13 ngày 21/11/2014 của Quốc hội sửa đổi, bổ sung một số điều của Luật Hàng không dân dụng Việt Nam, có hiệu lực kể từ ngày 01/7/2015;
-2. Luật Đầu tư theo phương thức đối tác công tư số 64/2020/QH14 ngày 18/6/2020 của Quốc hội, có hiệu lực kể từ ngày 01/01/2021.
-Căn cứ Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam năm 1992 đã được sửa đổi, bổ sung một số điều theo Nghị quyết số 51/2001/QH10;
-Quốc hội ban hành Luật Giá[1].
-Chương I
-NHỮNG QUY ĐỊNH CHUNG
-Điều 1. Phạm vi điều chỉnh
-Luật này quy định về quyền và nghĩa vụ của tổ chức, cá nhân trong lĩnh vực giá; hoạt động quản lý, điều tiết giá của Nhà nước.
-Điều 2. Đối tượng áp dụng
-Tổ chức, cá nhân sản xuất, kinh doanh; người tiêu dùng; cơ quan nhà nước; tổ chức, cá nhân khác liên quan đến hoạt động trong lĩnh vực giá trên lãnh thổ Việt Nam.
-Điều 3. Áp dụng luật
-1. Các hoạt động trong lĩnh vực giá trên lãnh thổ Việt Nam phải tuân thủ quy định của Luật này.
-2. Trường hợp điều ước quốc tế mà nước Cộng hòa xã hội chủ nghĩa Việt Nam là thành viên có quy định khác với quy định của Luật này thì áp dụng quy định của điều ước quốc tế đó.
-Điều 4. Giải thích từ ngữ
-Trong Luật này, các từ ngữ dưới đây được hiểu như sau:
-1. Hàng hóa là tài sản có thể trao đổi, mua, bán trên thị trường, có khả năng thỏa mãn nhu cầu của con người, bao gồm các loại động sản và bất động sản.
-2. Dịch vụ là hàng hóa có tính vô hình, quá trình sản xuất và tiêu dùng không tách rời nhau, bao gồm các loại dịch vụ trong hệ thống ngành sản phẩm Việt Nam theo quy định của pháp luật.
-3. Hàng hóa, dịch vụ thiết yếu là những hàng hóa, dịch vụ không thể thiếu cho sản xuất, đời sống, quốc phòng, an ninh, bao gồm: nguyên liệu, nhiên liệu, vật liệu, dịch vụ chính phục vụ sản xuất, lưu thông; sản phẩm đáp ứng nhu cầu cơ bản của con người và quốc phòng, an ninh.
+~ do Hanh phúc
 
-Trang 2
+Hà Nôi, ngày28tháng $ nžm 2023
 
-4. Giá thị trường là giá hàng hóa, dịch vụ hình thành do các nhân tố chi phối và vận động của thị trường quyết định tại một thời điểm, địa điểm nhất định.
-5. Định giá là việc cơ quan nhà nước có thẩm quyền hoặc tổ chức, cá nhân sản xuất, kinh doanh quy định giá cho hàng hóa, dịch vụ.
-6. Niêm yết giá là việc tổ chức, cá nhân sản xuất, kinh doanh thông báo công khai bằng các hình thức thích hợp, rõ ràng và không gây nhầm lẫn cho khách hàng về mức giá mua, giá bán hàng hóa, dịch vụ bằng Đồng Việt Nam bằng cách in, dán, ghi giá trên bảng, trên giấy hoặc trên bao bì của hàng hóa hoặc bằng hình thức khác tại nơi giao dịch hoặc nơi chào bán hàng hóa, dịch vụ để thuận tiện cho việc quan sát, nhận biết của khách hàng, cơ quan nhà nước có thẩm quyền.
-7. Hiệp thương giá là việc cơ quan nhà nước có thẩm quyền tổ chức và làm trung gian cho bên mua và bên bán thương lượng về mức giá mua, giá bán hàng hóa, dịch vụ thỏa mãn điều kiện hiệp thương giá theo đề nghị của một trong hai bên hoặc cả hai bên mua, bán hoặc khi có yêu cầu của Thủ tướng Chính phủ, Bộ trưởng, Thủ trưởng cơ quan ngang bộ, Thủ trưởng cơ quan thuộc Chính phủ, Chủ tịch Ủy ban nhân dân tỉnh, thành phố trực thuộc Trung ương (sau đây gọi chung là Ủy ban nhân dân cấp tỉnh).
-8. Đăng ký giá là việc tổ chức, cá nhân sản xuất, kinh doanh hàng hóa, dịch vụ lập, phân tích việc hình thành mức giá và gửi biểu mẫu thông báo giá cho cơ quan nhà nước có thẩm quyền trước khi định giá, điều chỉnh giá hàng hóa, dịch vụ thuộc Danh mục hàng hóa, dịch vụ thực hiện bình ổn giá trong thời gian Nhà nước áp dụng biện pháp bình ổn giá.
-9. Kê khai giá là việc tổ chức, cá nhân sản xuất, kinh doanh hàng hóa, dịch vụ gửi thông báo mức giá hàng hóa, dịch vụ cho cơ quan nhà nước có thẩm quyền khi định giá, điều chỉnh giá đối với hàng hóa, dịch vụ thuộc diện phải kê khai giá.
-10. Bình ổn giá là việc Nhà nước áp dụng biện pháp thích hợp về điều hòa cung cầu, tài chính, tiền tệ và biện pháp kinh tế, hành chính cần thiết khác để tác động vào sự hình thành và vận động của giá, không để giá hàng hóa, dịch vụ tăng quá cao hoặc giảm quá thấp bất hợp lý.
-11. Yếu tố hình thành giá là giá thành toàn bộ thực tế hợp lý tương ứng với chất lượng hàng hóa, dịch vụ; lợi nhuận (nếu có); các nghĩa vụ tài chính theo quy định của pháp luật; giá trị vô hình của thương hiệu.
-12. Giá thành toàn bộ của hàng hóa, dịch vụ là giá thành tiêu thụ hàng hóa, dịch vụ, bao gồm: a) Giá thành sản xuất hàng hóa, dịch vụ; giá mua hàng hóa, dịch vụ đối với tổ chức, cá nhân hoạt động thương mại; b) Chi phí lưu thông để đưa hàng hóa, dịch vụ đến người tiêu dùng.
-13. Mặt bằng giá là mức trung bình của các mức giá hàng hóa, dịch vụ trong nền kinh tế ứng với không gian, thời gian nhất định và được đo bằng chỉ số giá tiêu dùng.
-14. Giá biến động bất thường là giá hàng hóa, dịch vụ tăng quá cao hoặc giảm quá thấp bất hợp lý khi các yếu tố hình thành giá không thay đổi lớn hoặc trong trường hợp khủng hoảng kinh tế, thiên tai, địch họa, hỏa hoạn, dịch bệnh.
-15. Thẩm định giá là việc cơ quan, tổ chức có chức năng thẩm định giá xác định giá trị bằng tiền của các loại tài sản theo quy định của Bộ luật dân sự phù hợp với giá thị trường tại một địa điểm, thời điểm nhất định, phục vụ cho mục đích nhất định theo tiêu chuẩn thẩm định giá.
+cho sinh viên
 
-Trang 3
+Cžn cú Luât Giáo duc dai hoc ngày 18 bô ngày 19 11 nàm 2018; tháng tháng hoc
 
-16. Báo cáo kết quả thẩm định giá là văn bản do doanh nghiệp thẩm định giá lập, trong đó nêu rõ quá trình thẩm định giá, kết quả thẩm định giá và ý kiến của doanh nghiệp thẩm định giá về giá trị của tài sản được thẩm định để khách hàng và các bên liên quan có căn cứ sử dụng cho mục đích ghi trong hợp đồng thẩm định giá.
+12 nàm 2019 cua Chính môt sã diêu cua Luât Giáo duc dai hoc; tháng phu hwóng
 
+6 nžm 2010; tháng
+
+Chinh phu Vê duc thuôc hê duc dân; tháng twóng hoc bông quóc thông giáo liên tich sô 42/2013/TTLT-BGDDT-BLDTBXH-BTC ngày 31/12/2013 cua Liên Bô Giáo duc và Dào tao; Bô Lao Thong Binh và xã hôi, Thông dông giáo 05/3/2014);
+
+tu tác sinh viên dói vói chwong trình dào tao dai hoe hê chính quy; Thông công duc thuôc hê giáo duc dân và duc, dào tao; quôc giáo giá giáo phi
+
+cua Dai hoc Bách khoa Hà Nôi do Hôi dai hoc ban hành theo Nghi sô 17/NQ-DHBK ngày 16 dông quvêt tháng
+
+16 chwong trình dào tao theo tiêu chuân ASIIN ngày 24/2/2023; lwong
+
+Theo dê cúa tác sinh viên. Ông Công nghi dang
+
+;
+
+Các chiu trách nhiêm thi hành QuyUt dinh C Ông. Công hoc này . \_
+
+- Luu: VT. CTSV.
+
+<!-- image -->
+
+Dai hoc trong
+
+PHÓ GIÁM ÚÓC
+
+PGS.TS
+
+VIET NAM = do Hanh phúc T"
+
+Trikn khai các chính sách hm
+
+Kèm theo thángk nžm 2023 cua Giám dôc Dai hoc Bách khoa Hà Nôi)
+
+hoc tâp tai Dai Bách khoa Hà Nôi (DIBK Ià Nôi). lan toa tinh thân nhân vžn trong toàn Dai hoc và trách hoc dang công
+
+1
+
+chính quy\_
+
+2
+
+2.1 .
+
+- Sinh viên tháng nghèo
+- nghèo
+
+2.2. viên tât tai co só
+
+- cho dung Trang ngœòi dung
+
+2.3. Các hoat dông chžm sóc súc khoc tinh thân
+
+- Phòng Công tác Sinh viên; các don vi chúc viên nžng hoc giáo quán
+- viên khuyUt tât thco quy dinh. riêng Frung
+
+- tai DHBK Hà Nôi.
+- nhâp môi trwòng vžn hóa da cúa DIBK Hà Nôi. dang
+
+3.
+
+3.1 . Phòng tác Sinh viên Công
+
+- dôc.
+- thông tin sinh viên
+- nhât khuyUt tât cho các don vi liên quan (sau 1 tháng) khi và hoàn tât thú tuc nhâp thông hoc. hoc trúng
+- Phki vói Phòng Tài chính nžm dành cho sinh hàng
+- và Quán tri thœong hiêu; các cá nhân và tô chúc bên dai hoc tìm kiém các cho các thông nguôn ngoài
+- hoc tâp và viên sinh viên trong viêc theo dãi trình hoc tâp cúa sinh giáo lóp quá quán
+- hç trF sinh viên
+- vói thuoc men cho sinh viên là
+- xã hôi; chúc các dich
+
+Phòng Bào tao
+
+- vói Phòng trình tâp cúa sinh Công quá hoc
+- tai các phòng có trang bi cúa sinh viên khuyt tût. hoc hoc nguòi
+
+3.3. Phòng Tài chính
+
+- chât và các khoan chi trá cho sinh viên khuyUt tât thco các duyêt phê
+
+3.4.
+
+- nguôn bông
+- Có các hoat dông sinh viên khuyét tât. truyên thông
+
+3.5.
+
+- vói Phòng dung Công
+
+3.6. tâm Y tk Bách Khoa Trung
+
+- viên
+
+3.7. Các Trwòng/Viên/Khoa chuyên môn, giáo viên quán
+
+- vói Phòng tác sinh viên. công c vân tâp và giáo viên trình hoc tâp cúa sinh viên phân hoc Công quá quan
+- Phki vói CTSV tìm kiém các cho các sinh viên nguôn Phòng bông
+
+3.8. Khoa Giáo An Ninh Duc
+
+- cho sinh viên
+
+3.9 Hoàn Thanh niên Hôi sinh viên
+
+- vói Phòng hoc rèn luyên và tham gia các hoat phù Công dông
+- tao; hoc thuât; các hoat cho sinh viên chung. sáng dông dông công
+
+<!-- image -->
