@@ -62,7 +62,7 @@ def main():
     Uses fixed paths for input and output files.
     """
     # Define fixed paths
-    INPUT_PATH = r"D:\DATN_HUST\test\data\pdf\QĐ Ban hành hướng dân triển khai chính sachsHT cho SV khuyết tật_scan.pdf"
+    INPUT_PATH = r"D:\DATN_HUST\test\data\pdf\QCDT-2023-upload.pdf"
     OUTPUT_PATH = r"D:\DATN_HUST\test\output\output.txt"
     
     # Check if input file exists
