@@ -1,517 +1,324 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+"""
+Vietnamese Text Embedder Module
+
+This module provides text embedding functionality specifically for Vietnamese text
+using the AITeamVN/Vietnamese_Embedding model from Hugging Face.
+"""
 
 import os
-import json
-import sys
-import time
+import torch
+from typing import List, Dict, Any, Optional, Union, Callable
 import numpy as np
+from tqdm import tqdm
 from pathlib import Path
-from typing import List, Dict, Optional, Tuple, Any, Union
 
-try:
-    from sentence_transformers import SentenceTransformer
-    from qdrant_client import QdrantClient
-    from qdrant_client.http import models
-except ImportError as e:
-    print(f"Error: {e}")
-    print("\nDependency error. Please install required packages:")
-    print("pip install sentence-transformers==2.2.2 huggingface-hub==0.12.1 ")
-    print("pip install qdrant-client==1.4.0 torch transformers protobuf==5.26.1")
-    sys.exit(1)
+# LangChain imports
+from langchain_core.embeddings import Embeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_core.documents import Document
 
-class TextEmbedder:
+# Load environment variables (if needed)
+from dotenv import load_dotenv
+load_dotenv()
+
+class VietnameseTextEmbedder:
     """
-    A class for embedding texts and storing them in a vector database.
+    A class that provides text embedding functionality for Vietnamese text
+    using the AITeamVN/Vietnamese_Embedding model.
     """
     
-    def __init__(self, 
-                model_name: str = "vinai/phobert-base",
-                batch_size: int = 8):
+    def __init__(
+        self,
+        model_name: str = "AITeamVN/Vietnamese_Embedding",
+        max_seq_length: int = 2048,
+        cache_folder: Optional[str] = None,
+        model_kwargs: Optional[Dict[str, Any]] = None,
+        use_gpu: Optional[bool] = None
+    ):
         """
-        Initialize the text embedder.
+        Initialize the Vietnamese text embedder.
         
         Args:
-            model_name (str): Name of the sentence transformer model to use
-            batch_size (int): Batch size for embedding
+            model_name (str): The name of the Hugging Face embedding model
+            max_seq_length (int): Maximum sequence length for the model
+            cache_folder (Optional[str]): Directory to cache the model
+            model_kwargs (Optional[Dict[str, Any]]): Additional kwargs for the model
+            use_gpu (Optional[bool]): Whether to use GPU acceleration (None for auto-detect)
         """
         self.model_name = model_name
-        self.batch_size = batch_size
-        self._load_model()
+        self.max_seq_length = max_seq_length
         
-    def _load_model(self):
-        """Load the embedding model."""
-        print(f"Loading model: {self.model_name}")
-        try:
-            self.model = SentenceTransformer(self.model_name)
-            print(f"✓ Model loaded successfully")
-        except Exception as e:
-            print(f"✗ Error loading model: {e}")
-            raise
+        # Check for CUDA availability
+        self.device = self._get_device(use_gpu)
+        print(f"Using device: {self.device}")
+        
+        # Initialize embedding model kwargs
+        if model_kwargs is None:
+            model_kwargs = {"device": self.device}
+        else:
+            model_kwargs["device"] = self.device
+        
+        encode_kwargs = {"normalize_embeddings": False}  # For dot product similarity
+        
+        # Initialize HuggingFaceEmbeddings from langchain
+        self.embeddings = HuggingFaceEmbeddings(
+            model_name=model_name,
+            model_kwargs=model_kwargs,
+            encode_kwargs=encode_kwargs,
+            cache_folder=cache_folder
+        )
+        
+        # Set max sequence length
+        if hasattr(self.embeddings, "client") and hasattr(self.embeddings.client, "max_seq_length"):
+            self.embeddings.client.max_seq_length = max_seq_length
     
-    def encode_chunks(self, chunks: List[Dict]) -> List[np.ndarray]:
+    def _get_device(self, use_gpu: Optional[bool] = None) -> str:
         """
-        Encode chunks using the Vietnamese language model.
+        Determine which device (CPU/CUDA) to use for embeddings.
         
         Args:
-            chunks (List[Dict]): List of text chunks
+            use_gpu (Optional[bool]): Whether to use GPU. If None, auto-detect.
             
         Returns:
-            List[np.ndarray]: List of embeddings for each chunk
+            str: Device string for PyTorch
         """
-        print(f"Encoding {len(chunks)} chunks...")
+        if use_gpu is False:
+            return "cpu"
         
-        # Extract just the text content for encoding
-        texts = [chunk["content"] for chunk in chunks]
-        
-        # Convert the texts to embeddings in smaller batches to avoid memory issues
-        batch_size = self.batch_size
-        embeddings = []
-        
-        total_batches = (len(texts) + batch_size - 1) // batch_size  # Ceiling division
-        
-        for i in range(0, len(texts), batch_size):
-            batch_texts = texts[i:i+batch_size]
-            print(f"Processing batch {i//batch_size + 1}/{total_batches} ({len(batch_texts)} chunks)")
+        # Check for CUDA availability
+        if torch.cuda.is_available():
+            # Get CUDA version
+            cuda_version = torch.version.cuda
+            print(f"CUDA is available (version {cuda_version})")
             
-            try:
-                # Encode batch
-                batch_embeddings = self.model.encode(batch_texts, show_progress_bar=False)
-                embeddings.extend(batch_embeddings)
-                print(f"✓ Batch encoded successfully")
-            except Exception as e:
-                print(f"✗ Error in batch: {e}")
-                
-                # Process one by one if batch fails
-                print("Trying to encode chunks individually...")
-                for j, text in enumerate(batch_texts):
-                    try:
-                        # Encode single text
-                        emb = self.model.encode([text], show_progress_bar=False)[0]
-                        embeddings.append(emb)
-                        print(f"  ✓ Chunk {i+j+1}/{len(texts)} encoded successfully")
-                    except Exception as e2:
-                        print(f"  ✗ Failed to encode chunk {i+j+1}: {e2}")
-                        
-                        # Create placeholder embedding
-                        if embeddings:
-                            dummy_vector = np.zeros_like(embeddings[0])
-                        else:
-                            dummy_vector = np.zeros(768)  # Default size for PhoBERT
-                        
-                        embeddings.append(dummy_vector)
-                        print(f"  ! Added zero vector as placeholder")
-        
-        # Verify counts
-        if len(embeddings) != len(chunks):
-            print(f"Warning: Embeddings count ({len(embeddings)}) doesn't match chunks count ({len(chunks)})")
-            if len(embeddings) > len(chunks):
-                embeddings = embeddings[:len(chunks)]
+            # Check if we have CUDA 12.1 as specified in requirements
+            if cuda_version and "12.1" in cuda_version:
+                print("Using CUDA 12.1 for Vietnamese embeddings")
             else:
-                # Add dummy vectors if needed
-                while len(embeddings) < len(chunks):
-                    if embeddings:
-                        dummy_vector = np.zeros_like(embeddings[0])
-                    else:
-                        dummy_vector = np.zeros(768)
-                    embeddings.append(dummy_vector)
+                print(f"Warning: Using CUDA {cuda_version} (requirements specify 12.1)")
+            
+            return "cuda"
+        else:
+            print("CUDA is not available, falling back to CPU")
+            return "cpu"
+    
+    def _clean_text(self, text: str) -> str:
+        """
+        Clean the input text before embedding.
         
+        Args:
+            text (str): The input text to clean
+            
+        Returns:
+            str: The cleaned text
+        """
+        # Remove excessive whitespace
+        text = ' '.join(text.split())
+        return text
+    
+    def embed_text(self, text: str) -> List[float]:
+        """
+        Generate an embedding for a single text.
+        
+        Args:
+            text (str): Text to embed
+            
+        Returns:
+            List[float]: The embedding vector
+        """
+        # Clean text
+        cleaned_text = self._clean_text(text)
+        
+        # Generate embedding
+        embedding = self.embeddings.embed_query(cleaned_text)
+        return embedding
+    
+    def embed_documents(self, documents: List[Document]) -> List[List[float]]:
+        """
+        Generate embeddings for a list of LangChain Documents.
+        
+        Args:
+            documents (List[Document]): List of Documents to embed
+            
+        Returns:
+            List[List[float]]: List of embedding vectors
+        """
+        # Extract text from documents
+        texts = [doc.page_content for doc in documents]
+        
+        # Clean texts
+        cleaned_texts = [self._clean_text(text) for text in texts]
+        
+        # Generate embeddings
+        embeddings = self.embeddings.embed_documents(cleaned_texts)
         return embeddings
-
-    def encode_texts(self, texts: List[str]) -> List[np.ndarray]:
+    
+    def embed_batch(self, texts: List[str], batch_size: int = 32, show_progress: bool = False) -> List[List[float]]:
         """
-        Encode individual texts using the embedding model.
+        Generate embeddings for a list of texts in batches.
         
         Args:
-            texts (List[str]): List of texts to encode
+            texts (List[str]): List of texts to embed
+            batch_size (int): Batch size for embedding
+            show_progress (bool): Whether to show a progress bar
             
         Returns:
-            List[np.ndarray]: List of embeddings
+            List[List[float]]: List of embedding vectors
         """
-        if not texts:
-            return []
+        # Clean texts
+        cleaned_texts = [self._clean_text(text) for text in texts]
         
-        print(f"Encoding {len(texts)} texts...")
+        all_embeddings = []
         
-        # Convert the texts to embeddings in smaller batches to avoid memory issues
-        batch_size = self.batch_size
-        embeddings = []
+        # Process in batches
+        iterator = range(0, len(cleaned_texts), batch_size)
+        if show_progress:
+            iterator = tqdm(iterator, desc="Generating embeddings", unit="batch")
         
-        total_batches = (len(texts) + batch_size - 1) // batch_size  # Ceiling division
+        for i in iterator:
+            batch_texts = cleaned_texts[i:i+batch_size]
+            batch_embeddings = self.embeddings.embed_documents(batch_texts)
+            all_embeddings.extend(batch_embeddings)
         
-        for i in range(0, len(texts), batch_size):
-            batch_texts = texts[i:i+batch_size]
-            print(f"Processing batch {i//batch_size + 1}/{total_batches} ({len(batch_texts)} texts)")
-            
-            try:
-                # Encode batch
-                batch_embeddings = self.model.encode(batch_texts, show_progress_bar=False)
-                embeddings.extend(batch_embeddings)
-                print(f"✓ Batch encoded successfully")
-            except Exception as e:
-                print(f"✗ Error in batch: {e}")
-                
-                # Process one by one if batch fails
-                for j, text in enumerate(batch_texts):
-                    try:
-                        emb = self.model.encode([text], show_progress_bar=False)[0]
-                        embeddings.append(emb)
-                    except Exception as e2:
-                        print(f"  ✗ Failed to encode text: {e2}")
-                        # Create placeholder embedding
-                        if embeddings:
-                            dummy_vector = np.zeros_like(embeddings[0])
-                        else:
-                            dummy_vector = np.zeros(768)  # Default size for PhoBERT
-                        embeddings.append(dummy_vector)
-        
-        return embeddings
-
-    def save_embeddings(self, chunks: List[Dict], embeddings: List[np.ndarray], 
-                       output_path: Optional[str] = None) -> None:
+        return all_embeddings
+    
+    def compute_similarity(self, embedding1: List[float], embedding2: List[float]) -> float:
         """
-        Save chunks and their embeddings to a file.
+        Compute the similarity between two embeddings using dot product.
         
         Args:
-            chunks (List[Dict]): List of text chunks with metadata
-            embeddings (List[np.ndarray]): List of embeddings for each chunk
-            output_path (str, optional): Path to save the embeddings
+            embedding1 (List[float]): First embedding vector
+            embedding2 (List[float]): Second embedding vector
+            
+        Returns:
+            float: Similarity score between the embeddings
         """
-        if output_path:
-            print(f"Saving chunks and embeddings to {output_path}")
+        # Convert to numpy arrays
+        vec1 = np.array(embedding1)
+        vec2 = np.array(embedding2)
+        
+        # Compute dot product
+        return float(np.dot(vec1, vec2))
+    
+    def compute_similarities(self, query_embedding: List[float], document_embeddings: List[List[float]]) -> List[float]:
+        """
+        Compute similarities between a query embedding and multiple document embeddings.
+        
+        Args:
+            query_embedding (List[float]): The query embedding
+            document_embeddings (List[List[float]]): List of document embeddings
             
-            # Create directory if it doesn't exist
-            output_dir = os.path.dirname(output_path)
-            if output_dir:
-                os.makedirs(output_dir, exist_ok=True)
-            
-            # Prepare data for saving
-            serializable_embeddings = [embedding.tolist() for embedding in embeddings]
-            data = {
-                "chunks": chunks,
-                "embeddings": serializable_embeddings,
-                "model_name": self.model_name,
-                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
-            }
-            
-            # Save to file
-            with open(output_path, 'w', encoding='utf-8') as f:
-                json.dump(data, f, ensure_ascii=False, indent=2)
-            
-            print(f"✓ Saved {len(chunks)} chunks and embeddings")
+        Returns:
+            List[float]: List of similarity scores
+        """
+        # Convert to numpy arrays
+        query_vec = np.array(query_embedding)
+        doc_vecs = np.array(document_embeddings)
+        
+        # Compute dot products
+        similarities = np.dot(doc_vecs, query_vec)
+        return similarities.tolist()
+    
+    def get_langchain_embeddings(self) -> Embeddings:
+        """
+        Get the underlying LangChain embeddings model.
+        
+        Returns:
+            Embeddings: The LangChain embeddings model
+        """
+        return self.embeddings
 
 
-class QdrantStorage:
+class VietnameseEmbeddings(Embeddings):
     """
-    A class for storing text chunks and their embeddings in Qdrant.
+    LangChain-compatible embeddings class for Vietnamese.
+    This class implements the LangChain Embeddings interface.
     """
     
-    def __init__(self, 
-                host: str = "localhost",
-                port: int = 6333,
-                collection_name: str = "hust_documents",
-                distance: str = "Cosine"):
+    def __init__(
+        self,
+        model_name: str = "AITeamVN/Vietnamese_Embedding",
+        max_seq_length: int = 2048,
+        cache_folder: Optional[str] = None,
+        model_kwargs: Optional[Dict[str, Any]] = None,
+        use_gpu: Optional[bool] = None
+    ):
         """
-        Initialize the Qdrant storage.
+        Initialize the Vietnamese embeddings model.
         
         Args:
-            host (str): Qdrant server host
-            port (int): Qdrant server port
-            collection_name (str): Name of the collection to store data
-            distance (str): Distance metric to use ("Cosine", "Euclid", "Dot")
+            model_name (str): The name of the Hugging Face embedding model
+            max_seq_length (int): Maximum sequence length for the model
+            cache_folder (Optional[str]): Directory to cache the model
+            model_kwargs (Optional[Dict[str, Any]]): Additional kwargs for the model
+            use_gpu (Optional[bool]): Whether to use GPU acceleration (None for auto-detect)
         """
-        self.host = host
-        self.port = port
-        self.collection_name = collection_name
-        self.distance = distance
-        self._connect_to_qdrant()
-    
-    def _connect_to_qdrant(self):
-        """Connect to Qdrant server."""
-        try:
-            # Connect to Qdrant
-            print(f"Connecting to Qdrant at {self.host}:{self.port}...")
-            self.client = QdrantClient(host=self.host, port=self.port)
-            print("Connected successfully")
-        except Exception as e:
-            print(f"Error connecting to Qdrant: {e}")
-            print("Make sure Qdrant is running and accessible")
-            raise
-    
-    def create_collection(self, vector_size: int = 768) -> bool:
-        """
-        Create a collection in Qdrant if it doesn't exist.
-        
-        Args:
-            vector_size (int): Size of the vectors
-            
-        Returns:
-            bool: True if successful
-        """
-        try:
-            # Check if collection already exists
-            collections = self.client.get_collections().collections
-            collection_names = [collection.name for collection in collections]
-            
-            if self.collection_name in collection_names:
-                print(f"Collection '{self.collection_name}' already exists")
-                return True
-            
-            # Create the collection
-            self.client.create_collection(
-                collection_name=self.collection_name,
-                vectors_config=models.VectorParams(
-                    size=vector_size,
-                    distance=self.distance
-                )
-            )
-            print(f"Created collection '{self.collection_name}'")
-            return True
-        except Exception as e:
-            print(f"Error creating collection: {e}")
-            return False
-    
-    def store_chunks(self, chunks: List[Dict], embeddings: List[np.ndarray]) -> bool:
-        """
-        Store chunks and their embeddings in Qdrant.
-        
-        Args:
-            chunks (List[Dict]): List of text chunks with metadata
-            embeddings (List[np.ndarray]): List of embeddings for each chunk
-            
-        Returns:
-            bool: True if successful
-        """
-        # Check that chunks and embeddings match
-        if len(chunks) != len(embeddings):
-            print(f"Error: Number of chunks ({len(chunks)}) does not match number of embeddings ({len(embeddings)})")
-            return False
-        
-        try:
-            # Create collection if it doesn't exist
-            vector_size = len(embeddings[0])
-            self.create_collection(vector_size)
-            
-            # Upload in batches to avoid memory issues
-            batch_size = 20
-            total_batches = (len(chunks) + batch_size - 1) // batch_size
-            total_uploaded = 0
-            
-            for i in range(0, len(chunks), batch_size):
-                end_idx = min(i + batch_size, len(chunks))
-                batch_chunks = chunks[i:end_idx]
-                batch_embeddings = embeddings[i:end_idx]
-                
-                print(f"\nUploading batch {i//batch_size + 1}/{total_batches} ({len(batch_chunks)} chunks)")
-                
-                # Prepare points for upload
-                points = []
-                for j, (chunk, embedding) in enumerate(zip(batch_chunks, batch_embeddings)):
-                    try:
-                        # Extract metadata and create preview
-                        metadata = chunk["metadata"]
-                        text_preview = chunk["content"][:100] if chunk["content"] else ""  # First 100 chars
-                        
-                        # Create simplified payload (avoid nested structures)
-                        payload = {
-                            "article": str(metadata.get("article", "")),
-                            "article_idx": int(metadata.get("article_idx", 0)),
-                            "chunk_idx": int(metadata.get("chunk_idx", 0)),
-                            "total_chunks": int(metadata.get("total_chunks", 1)),
-                            "start_line": int(metadata.get("start_line", 0)),
-                            "end_line": int(metadata.get("end_line", 0)),
-                            "is_complete_article": bool(metadata.get("is_complete_article", False)),
-                            "sentence_range": str(metadata.get("sentence_range", "")),
-                            "sentences": int(metadata.get("sentences", 0)),
-                            "total_sentences": int(metadata.get("total_sentences", 0)) if "total_sentences" in metadata else 0,
-                            "text_preview": text_preview,
-                            "content": chunk["content"]
-                        }
-                        
-                        # Create point
-                        point_id = i + j
-                        vector = embedding.tolist()
-                        
-                        # Validate vector
-                        if not all(isinstance(x, (int, float)) for x in vector):
-                            print(f"  Warning: Invalid values in vector {point_id}. Skipping.")
-                            continue
-                        
-                        points.append(models.PointStruct(
-                            id=point_id,
-                            vector=vector,
-                            payload=payload
-                        ))
-                        
-                    except Exception as e:
-                        print(f"  Error creating point {i+j}: {e}")
-                
-                # Upload batch
-                if points:
-                    try:
-                        self.client.upsert(
-                            collection_name=self.collection_name,
-                            points=points
-                        )
-                        total_uploaded += len(points)
-                        print(f"✓ Successfully uploaded {len(points)} points")
-                    except Exception as e:
-                        print(f"✗ Error uploading batch: {e}")
-                        print(f"  Error details: {str(e)}")
-                else:
-                    print("! No valid points in this batch")
-            
-            print(f"\nCompleted uploading {total_uploaded}/{len(chunks)} chunks to Qdrant")
-            return total_uploaded > 0
-        
-        except Exception as e:
-            print(f"Error storing chunks in Qdrant: {e}")
-            import traceback
-            traceback.print_exc()
-            return False
-    
-    def is_running(self) -> bool:
-        """
-        Check if Qdrant server is accessible.
-        
-        Returns:
-            bool: True if Qdrant is accessible
-        """
-        try:
-            # Try to get collections info
-            self.client.get_collections()
-            return True
-        except Exception as e:
-            print(f"Qdrant server not accessible at {self.host}:{self.port}: {e}")
-            return False
-
-
-class TextProcessor:
-    """
-    A class that combines chunking, embedding, and storage.
-    """
-    
-    def __init__(self,
-                embedder: TextEmbedder,
-                storage: QdrantStorage,
-                output_dir: Optional[str] = None):
-        """
-        Initialize the text processor.
-        
-        Args:
-            embedder (TextEmbedder): The embedder to use
-            storage (QdrantStorage): The storage to use
-            output_dir (str, optional): Directory to save embeddings
-        """
-        self.embedder = embedder
-        self.storage = storage
-        self.output_dir = output_dir
-        
-        if self.output_dir:
-            os.makedirs(self.output_dir, exist_ok=True)
-    
-    def process_chunks(self, chunks: List[Dict], 
-                      save_to_file: bool = True,
-                      store_in_qdrant: bool = True) -> Tuple[List[Dict], List[np.ndarray]]:
-        """
-        Process text chunks: embed and store.
-        
-        Args:
-            chunks (List[Dict]): List of text chunks
-            save_to_file (bool): Whether to save embeddings to file
-            store_in_qdrant (bool): Whether to store in Qdrant
-            
-        Returns:
-            Tuple[List[Dict], List[np.ndarray]]: Processed chunks and their embeddings
-        """
-        # Embed chunks
-        start_time = time.time()
-        embeddings = self.embedder.encode_chunks(chunks)
-        embedding_time = time.time() - start_time
-        print(f"Embedding completed in {embedding_time:.2f} seconds")
-        
-        # Save to file if requested
-        if save_to_file and self.output_dir:
-            timestamp = time.strftime("%Y%m%d_%H%M%S")
-            output_path = os.path.join(self.output_dir, f"embeddings_{timestamp}.json")
-            self.embedder.save_embeddings(chunks, embeddings, output_path)
-        
-        # Store in Qdrant if requested
-        if store_in_qdrant:
-            if self.storage.is_running():
-                start_time = time.time()
-                success = self.storage.store_chunks(chunks, embeddings)
-                storage_time = time.time() - start_time
-                print(f"Storage {'completed' if success else 'failed'} in {storage_time:.2f} seconds")
-            else:
-                print("Skipping Qdrant storage as server is not accessible")
-        
-        return chunks, embeddings
-
-
-def main():
-    """Example usage of text embedding and storage."""
-    # Example chunks (these would normally come from a chunker)
-    chunks = [
-        {
-            "content": "Đây là một ví dụ về chunk văn bản tiếng Việt đầu tiên.",
-            "metadata": {
-                "article": "Điều 1: Quy định chung",
-                "article_idx": 0,
-                "chunk_idx": 0,
-                "total_chunks": 2,
-                "start_line": 1,
-                "end_line": 5,
-                "is_complete_article": False,
-                "sentence_range": "0-1",
-                "sentences": 2
-            }
-        },
-        {
-            "content": "Đây là ví dụ thứ hai về chunk văn bản tiếng Việt.",
-            "metadata": {
-                "article": "Điều 1: Quy định chung",
-                "article_idx": 0,
-                "chunk_idx": 1,
-                "total_chunks": 2,
-                "start_line": 6,
-                "end_line": 10,
-                "is_complete_article": False,
-                "sentence_range": "2-3",
-                "sentences": 2
-            }
-        }
-    ]
-    
-    # Create embedder and storage
-    try:
-        embedder = TextEmbedder(model_name="vinai/phobert-base")
-        storage = QdrantStorage(
-            host="localhost",
-            port=6333,
-            collection_name="test_documents"
+        self.embedder = VietnameseTextEmbedder(
+            model_name=model_name,
+            max_seq_length=max_seq_length,
+            cache_folder=cache_folder,
+            model_kwargs=model_kwargs,
+            use_gpu=use_gpu
         )
+    
+    def embed_documents(self, texts: List[str]) -> List[List[float]]:
+        """
+        Embed documents using the Vietnamese embeddings model.
         
-        # Create processor
-        processor = TextProcessor(
-            embedder=embedder,
-            storage=storage,
-            output_dir="embeddings"
-        )
+        Args:
+            texts (List[str]): List of texts to embed
+            
+        Returns:
+            List[List[float]]: List of embeddings
+        """
+        return self.embedder.embed_batch(texts)
+    
+    def embed_query(self, text: str) -> List[float]:
+        """
+        Embed query text using the Vietnamese embeddings model.
         
-        # Process chunks
-        processed_chunks, embeddings = processor.process_chunks(
-            chunks=chunks,
-            save_to_file=True,
-            store_in_qdrant=True
-        )
-        
-        print(f"Successfully processed {len(processed_chunks)} chunks")
-        
-    except Exception as e:
-        print(f"Error in main: {e}")
-        import traceback
-        traceback.print_exc()
+        Args:
+            text (str): Query text to embed
+            
+        Returns:
+            List[float]: Embedding for the query
+        """
+        return self.embedder.embed_text(text)
+
 
 if __name__ == "__main__":
-    main() 
+    # Example usage
+    import sys
+    
+    # Create embedder
+    embedder = VietnameseTextEmbedder()
+    
+    # Example texts
+    queries = ["Trí tuệ nhân tạo là gì", "Lợi ích của giấc ngủ"]
+    documents = [
+        "Trí tuệ nhân tạo là công nghệ giúp máy móc suy nghĩ và học hỏi như con người. Nó hoạt động bằng cách thu thập dữ liệu, nhận diện mẫu và đưa ra quyết định.",
+        "Giấc ngủ giúp cơ thể và não bộ nghỉ ngơi, hồi phục năng lượng và cải thiện trí nhớ. Ngủ đủ giấc giúp tinh thần tỉnh táo và làm việc hiệu quả hơn."
+    ]
+    
+    # Generate embeddings
+    query_embeddings = embedder.embed_batch(queries)
+    doc_embeddings = embedder.embed_batch(documents)
+    
+    # Compute similarities
+    for i, query_embedding in enumerate(query_embeddings):
+        print(f"\nQuery: {queries[i]}")
+        similarities = embedder.compute_similarities(query_embedding, doc_embeddings)
+        for j, similarity in enumerate(similarities):
+            print(f"  Document {j+1}: {similarity:.6f} - {documents[j][:50]}...")
+    
+    # Example with LangChain Embeddings interface
+    lc_embeddings = VietnameseEmbeddings()
+    lc_query_embeddings = lc_embeddings.embed_query(queries[0])
+    print(f"\nLangChain Embeddings - dimension: {len(lc_query_embeddings)}")
+
+    # Print GPU info if available
+    if torch.cuda.is_available():
+        print(f"\nGPU Information:")
+        print(f"  Device name: {torch.cuda.get_device_name(0)}")
+        print(f"  CUDA version: {torch.version.cuda}")
+        print(f"  Memory allocated: {torch.cuda.memory_allocated(0) / 1024**2:.2f} MB")
