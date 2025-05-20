@@ -17,3 +17,6 @@ pandas
 pillow
 tqdm
 pdf2image==1.17.0  # Chuyển đổi PDF thành hình ảnh
+
+# Requirements for loading model files
+huggingface_hub>=0.23.0 
