@@ -14,10 +14,6 @@ from docling.datamodel.pipeline_options import (
 )
 from docling.document_converter import DocumentConverter, PdfFormatOption
 
-# Import trực tiếp từ docling-ibm-models - sửa lại đường dẫn import cho đúng
-from docling_ibm_models.layoutmodel.layout_predictor import LayoutPredictor
-from docling_ibm_models.tableformer.data_management.tf_predictor import TFPredictor
-
 def extract_text_from_pdf(pdf_path, output_path, preserve_tables=True):
     """
     Extract text from PDF files (including scanned PDFs with tables) using Docling.
@@ -56,13 +52,13 @@ def extract_text_from_pdf(pdf_path, output_path, preserve_tables=True):
         pipeline_options.accelerator_options = accelerator_options
         
         # Cấu hình để xử lý tốt bảng
-        # pipeline_options.do_table_structure = True
-        # pipeline_options.images_scale = 6.0  # Tăng scale lên 6.0 để cải thiện nhận diện ô gộp
-        # pipeline_options.generate_page_images = True  # Tạo ảnh trang để xử lý bảng tốt hơn
+        pipeline_options.do_table_structure = True
+        pipeline_options.images_scale = 6.0  # Tăng scale lên 6.0 để cải thiện nhận diện ô gộp
+        pipeline_options.generate_page_images = True  # Tạo ảnh trang để xử lý bảng tốt hơn
         
         # Cấu hình tối ưu cho việc xử lý ô gộp
         table_structure_options = TableStructureOptions(
-            do_cell_matching=True,  # Tắt matching với PDF cells để tránh vấn đề với ô gộp
+            do_cell_matching=False,  # Tắt matching với PDF cells để tránh vấn đề với ô gộp
             mode=TableFormerMode.ACCURATE  # Sử dụng mode chính xác để xử lý tốt hơn
         )
         pipeline_options.table_structure_options = table_structure_options
@@ -121,7 +117,7 @@ def main():
     """
     # Define fixed paths
     INPUT_PATH = r"D:\DATN_HUST\test\data\raw\pdf\Bachelor-Computer-Engineering-program.pdf"
-    OUTPUT_PATH = r"D:\DATN_HUST\test\text_output.txt"
+    OUTPUT_PATH = r"D:\DATN_HUST\test\text_output_2.txt"
     
     # Check if input file exists
     if not os.path.exists(INPUT_PATH):
