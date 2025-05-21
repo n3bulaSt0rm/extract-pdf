@@ -1,5 +1,0 @@
-azure-ai-documentintelligence>=4.0.0
-langchain>=0.0.267
-pandas>=2.0.0
-PyMuPDF>=1.22.5
-python-dotenv>=1.0.0 

@@ -22,7 +22,9 @@ torchaudio==2.3.0+cu121
 huggingface_hub>=0.23.0
 
 # LangChain and API requirements
+azure-ai-documentintelligence
 langchain-core>=0.1.20
+langchain-deepseek
 langchain-community>=0.0.20
 langchain-text-splitters>=0.0.1
 python-dotenv>=1.0.0
