@@ -102,7 +102,7 @@ def process_document(pdf_url, page_range=None):
         
         # Generate output filename with page range info if provided
         page_info = f"pages_{page_range.replace('-', 'to')}" if page_range else "all_pages"
-        output_filename = f"page_4.txt"
+        output_filename = f"course.txt"
         output_path = DATA_DIR / output_filename
         
         # Remove footnotes and save content
@@ -125,9 +125,9 @@ def process_document(pdf_url, page_range=None):
 
 if __name__ == "__main__":
     # Example URL
-    pdf_url = "https://aiagenthust.s3.ap-southeast-2.amazonaws.com/files/QCDT-2023-upload.pdf"
+    pdf_url = "https://aiagenthust.s3.ap-southeast-2.amazonaws.com/files/Bachelor-Computer-Engineering-program.pdf"
     
     # Process document and remove footnotes
-    output_path = process_document(pdf_url, page_range="4")
+    output_path = process_document(pdf_url, page_range="7-12")
     if output_path:
         print(f"Processing completed successfully")

@@ -19,7 +19,7 @@ from langchain_core.documents import Document
 load_dotenv()
 
 # DeepSeek API configuration
-DEEPSEEK_API_KEY = "sk-39e28a1cc59c49b28c3e1b16028949e0"
+DEEPSEEK_API_KEY = "sk-24fe674f3e79405ab9f278643a6a0cb1"
 # Output directory configuration
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
@@ -89,6 +89,38 @@ def clean_document_content(content):
     return content
 
 
+def format_html_table(table_text):
+    """
+    Format HTML table by removing whitespace, line breaks, and indentation
+    
+    Args:
+        table_text (str): HTML table text with potential whitespace and line breaks
+        
+    Returns:
+        str: Formatted HTML table with no whitespace between tags
+    """
+    # Save table name/marker if present
+    table_lines = table_text.split('\n')
+    table_marker = ""
+    if table_lines and '--- Table ' in table_lines[0]:
+        table_marker = table_lines[0] + '\n'
+        table_text = '\n'.join(table_lines[1:])
+    
+    # Remove whitespace between HTML tags
+    # First, remove line breaks and spaces between tags
+    formatted_table = re.sub(r'>\s+<', '><', table_text)
+    # Then, remove any remaining whitespace at the beginning or end of lines
+    formatted_table = re.sub(r'^\s+|\s+$', '', formatted_table, flags=re.MULTILINE)
+    # Finally, join all lines together
+    formatted_table = ''.join(formatted_table.split('\n'))
+    
+    # Reattach table marker if it was present
+    if table_marker:
+        formatted_table = table_marker + formatted_table
+        
+    return formatted_table
+
+
 def extract_html_tables(text):
     """
     Extract HTML tables from text
@@ -137,10 +169,10 @@ def convert_table_to_text(table_text, model):
         prompt_template = PromptTemplate(
             input_variables=["table"],
             template="""
-            Biểu diễn bảng sau bằng văn bản bình thường, đảm bảo rõ ràng, dễ hiểu, không mất thông tin. 
-            Không dùng kí tự đặc biệt ngoài dấu +, -. 
-            Dấu >=, <=, >, < được biểu diễn bằng lời.
-            Không giải thích gì thêm
+            Biểu diễn bảng sau bằng văn bản bình thường thay vì bảng html hoặc markdown, đảm bảo rõ ràng, dễ hiểu, không mất thông tin. 
+            Không dùng kí tự đặc biệt, hãy suy luận để dùng văn bản thay cho kí tự đặc biệt.
+            Trả lời bằng tiếng việt, không được sai chính tả.
+            Không giải thích gì thêm.
             {table}
             """
         )
@@ -159,6 +191,69 @@ def convert_table_to_text(table_text, model):
     except Exception as e:
         print(f"Error converting table to text: {str(e)}")
         return table_text  # Return the original table on error
+
+
+def process_tables_in_conversation(tables, model):
+    """
+    Process all tables in a single conversation with DeepSeek to maintain context and consistency
+    
+    Args:
+        tables (list): List of tuples (start_pos, end_pos, table_text)
+        model: DeepSeek model to use for conversion
+        
+    Returns:
+        list: List of tuples (start_pos, end_pos, table_description)
+    """
+    # Initialize conversation with system message
+    messages = [
+        {
+            "role": "system", 
+            "content": """Bạn sẽ nhận được nhiều bảng HTML để chuyển đổi thành văn bản mô tả.
+            Hãy nhớ các bảng đã xử lý trước đó và đảm bảo tính nhất quán.
+            Nếu bảng mới tương tự với bảng nào đã xử lý, hãy sử dụng cùng cấu trúc mô tả.
+            Nếu các bảng là các phần của cùng một bảng lớn bị chia do khác trang, hãy nối chúng lại.
+            Biểu diễn bảng bằng văn bản bình thường thay vì bảng HTML hoặc markdown, đảm bảo rõ ràng, dễ hiểu.
+            Không dùng kí tự đặc biệt, hãy suy luận để dùng văn bản thay cho kí tự đặc biệt.
+            Với những từ viết tắt thì hãy dựa vào nội dung để suy luận đưa ra từ đầy đủ.
+            Trả lời bằng tiếng Việt, không được sai chính tả.
+            Chỉ trả về mô tả văn bản, không thêm giải thích."""
+        }
+    ]
+    
+    # Results will store tuples of (start_pos, end_pos, description)
+    results = []
+    
+    # Process tables sequentially
+    for i, (start_pos, end_pos, table_text) in enumerate(tables):
+        # Format the table
+        formatted_table = format_html_table(table_text)
+        
+        # Extract table marker if present
+        table_marker = ""
+        lines = formatted_table.split('\n')
+        if lines and '--- Table ' in lines[0]:
+            table_marker = lines[0]
+        
+        # Add user message to conversation
+        messages.append({"role": "user", "content": formatted_table})
+        
+        # Get response from model
+        response = model.invoke(messages)
+        
+        # Add model response to conversation history
+        messages.append({"role": "assistant", "content": response.content})
+        
+        # Add table marker if it was present
+        description = response.content
+        if table_marker:
+            description = f"{table_marker}\n\n{description}"
+        
+        # Store result
+        results.append((start_pos, end_pos, description))
+        
+        print(f"Processed table {i+1}/{len(tables)}")
+    
+    return results
 
 
 def process_file(input_file, output_file=None):
@@ -198,8 +293,8 @@ def process_file(input_file, output_file=None):
         model = ChatDeepSeek(
             model="deepseek-chat",
             api_key=DEEPSEEK_API_KEY,
-            temperature=0.2,
-            max_tokens=4096
+            temperature=0.3,
+            max_tokens=8192
         )
         
         # Read the input file
@@ -216,15 +311,15 @@ def process_file(input_file, output_file=None):
         
         print(f"Found {len(all_tables)} tables in the document")
         
-        # Process in reverse order to avoid position shifting
-        all_tables.sort(reverse=True, key=lambda x: x[0])
-        
-        for start_pos, end_pos, table_text in all_tables:
-            print(f"Converting table with {table_text.count('|') + table_text.count('<td>')} cells...")
-            table_description = convert_table_to_text(table_text, model)
+        if all_tables:
+            # Process all tables in a single conversation to maintain context
+            processed_tables = process_tables_in_conversation(all_tables, model)
             
-            # Replace the table with its description
-            content = content[:start_pos] + table_description + content[end_pos:]
+            # Replace tables with their descriptions in reverse order to avoid shifting positions
+            processed_tables.sort(reverse=True, key=lambda x: x[0])
+            
+            for start_pos, end_pos, description in processed_tables:
+                content = content[:start_pos] + description + content[end_pos:]
         
         # Write output
         with open(output_path, 'w', encoding='utf-8') as file:
@@ -249,7 +344,7 @@ if __name__ == "__main__":
         print("Installation complete.")
     
     # Get input file path
-    input_file = sys.argv[1] if len(sys.argv) > 1 else str(DATA_DIR / "output_2.txt")
+    input_file = sys.argv[1] if len(sys.argv) > 1 else str(DATA_DIR / "course.txt")
     
     # Process the file
     output_file = process_file(input_file)

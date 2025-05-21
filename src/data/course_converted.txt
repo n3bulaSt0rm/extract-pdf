@@ -1,0 +1,269 @@
+Understanding, mastering and being able to apply specialized knowledge, approaching application
+orientations on Computer Network & Data Communication, Information Security, Computers and
+embedded systems in construction and broadcasting Computer systems, services, technical solutions.
+
+# 2. Kỹ năng chuyên nghiệp và phẩm chất cá nhân cần thiết để thành công trong nghề nghiệp: Professional skills and personal qualities needed to succeed in careers
+
+2.1. Phân tích và giải quyết vấn đề kỹ thuật, hiểu biết các phương pháp tiếp cận khác nhau của
+quá trình xây dựng công nghệ, thích hợp với mọi mặt: kinh tế -xã hội, đạo đức nghề
+nghiệp, luật pháp và an toàn thông tin.
+
+Technical problem analysis and solving, understanding the different approaches of the technology building
+process, appropriate for all aspects: socio-economic, professional ethics, law and information security.
+
+2.2. Khả năng thử nghiệm, nghiên cứu và khám phá tri thức
+Ability to experiment, research and discover knowledge
+
+2.3. Tư duy hệ thống và tư duy phê bình
+System thinking and critical thinking
+
+2.4. Tính năng động, sáng tạo và nghiêm túc
+Active, creative and serious
+
+2.5. Đạo đức và trách nhiệm nghề nghiệp
+Ethics and professional responsibilities
+
+2.6. Hiểu biết các vấn đề đương đại và ý thức học suốt đời
+Understanding contemporary issues and lifelong studying awareness.
+
+3\. Kỹ năng xã hội cần thiết để làm việc hiệu quả trong nhóm đa ngành và trong môi trường quốc
+tế:
+
+Social skills needed to work effectively in multidisciplinary teams and in the international environment:
+
+3.1. Kỹ năng tổ chức, lãnh đạo và làm việc theo nhóm (đa ngành)
+Organizational, leadership and teamwork skills (multidisciplinary)
+
+3.2. Kỹ năng giao tiếp hiệu quả thông qua viết, thuyết trình, thảo luận, đàm phán, làm chủ
+tình huống, sử dụng hiệu quả các công cụ và phương tiện hiện đại.
+
+Effective communication skills through writing, presentation, discussion, negotiation, case management,
+effective use of modern tools and facilities.
+
+3.3. Kỹ năng sử dụng tiếng Anh hiệu quả trong công việc, đạt điểm TOEIC ≥ 500.
+Skills to use English effectively at work, get TOEIC score ≥500
+
+4\. Năng lực tham gia thiết kế phát triển, cài đặt và bảo trì các hệ thống, sản phẩm, giải pháp kỹ
+thuật Công nghệ thông tin trong bối cảnh kinh tế, xã hội và môi trường:
+
+Competence in design, development, implemetation and maintenance of information technology systems, products
+and solutions in the economic, social and environmental context:
+
+4.1. Nhận thức về mối liên hệ mật thiết giữa giải pháp công nghệ thông tin với các yếu tố kinh
+tế, xã hội và môi trường trong thế giới toàn cầu hóa
+
+Awareness of the close relationship between information technology solutions with economic, social and
+environmental factors in the globalized world
+
+4.2. Nhận biết vấn đề và hình thành ý tưởng giải pháp công nghệ thông tin, tham gia xây
+dựng dự án công nghệ thông tin
+
+Identify problems and formulate ideas of information technology solutions, participate in building
+information technology projects
+
+4.3. Tham gia thiết kế các hệ thống, sản phẩm, giải pháp kỹ thuật Công nghệ thông tin
+Participate in designing information technology systems, products and solutions
+
+4.4. Tham gia cài đặt, triển khai các hệ thống, sản phẩm, giải pháp kỹ thuật Công nghệ thông
+tin
+
+Participating in implementing and deploying information technology systems, products and solutions
+
+4.5. Khai thác, bảo trì các hệ thống, sản phẩm, giải pháp kỹ thuật Công nghệ thông tin
+Exploiting and maintaining information technology systems, products and solutions
+
+# 3. Nội dung chương trình (Program Content)
+
+## 1.1. Cấu trúc chung của chương trình đào tạo (General Program Structure)
+
+Khối kiến thức (Professional component) - Tín chỉ (Credit) - Ghi chú (Note)
+
+Giáo dục đại cương (General Education) - 51 tín chỉ
+
+Toán và khoa học cơ bản (Mathematics and basic sciences) - 32 tín chỉ - Thiết kế phù hợp theo nhóm ngành đào tạo (Major oriented)
+
+Lý luận chính trị Pháp luật đại cương (Law and politics) - 13 tín chỉ - Theo quy định của Bộ GD&ĐT (in accordance with regulations of Vietnam Ministry of Education and Training)
+
+GDTC/GD QP-AN (Physical Education/ Military Education) - Military Education is for Vietnamese student only - Theo quy định của Bộ GD&ĐT (in accordance with regulations of Vietnam Ministry of Education and Training)
+
+Tiếng Anh (English) - 6 tín chỉ - Gồm 2 học phần Tiếng Anh cơ bản (02 basic English courses)
+
+Giáo dục chuyên nghiệp (Professional Education) - 81 tín chỉ
+
+Cơ sở và cốt lõi ngành (Basic and Core of Engineering) - 48 (±2) tín chỉ - Bao gồm từ 1+3 đồ án thiết kế, chế tạo/triển khai (consist of at least 1+3 projects)
+
+Kiến thức bổ trợ (Soft skills) - 9 tín chỉ - Gồm hai phần kiến thức bắt buộc: Kiến thức bổ trợ về xã hội, khởi nghiệp và các kỹ năng khác (6 tín chỉ); Technical Writing and Presentation (3 tín chỉ)
+
+Tự chọn theo môđun (Elective Module) - 16 (±2) tín chỉ - Khối kiến thức Tự chọn theo môđun tạo điều kiện cho sinh viên học tiếp cận theo một lĩnh vực ứng dụng (Elective module provides specialized knowledge oriented towards different concentrations)
+
+Thực tập kỹ thuật (Engineering Internship) - 2 tín chỉ - Thực hiện từ trình độ năm thứ ba (scheduled for third year or above)
+
+Đồ án tốt nghiệp cử nhân (Bachelor Thesis) - 6 tín chỉ - Đề tài tốt nghiệp gắn liền với lĩnh vực ứng dụng và phù hợp với nội dung thực tập tốt nghiệp (Topic must be relevant to major and knowledge gained during engineering practicum)
+
+Tổng cộng (Total) - 132 tín chỉ (132 credits)
+
+## 1.2. Danh mục học phần và kế hoạch học tập chuẩn (Course list & Standard schedule)
+
+TT (No.) - MÃ SỐ (Course ID) - TÊN HỌC PHẦN (Course Name) - KHỐI LƯỢNG (Tín chỉ) (Credit) - KỲ HỌC (Semester) 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8
+
+Lý luận chính trị + Pháp luật đại cương (Laws and politics) - 13 tín chỉ
+
+1 - SSH1111 - Triết học Mác - Lênin - 3(3-0-0-6) - Học kỳ 1
+2 - SSH1121 - Kinh tế chính trị Mác - Lênin - 2(2-0-0-4) - Học kỳ 2
+3 - SSH1131 - Chủ nghĩa xã hội khoa học - 2(2-0-0-4) - Học kỳ 3
+4 - SSH1141 - Lịch sử Đảng Cộng sản Việt Nam - 2(2-0-0-4) - Học kỳ 4
+5 - SSH1151 - Tư tưởng Hồ Chí Minh (Ho Chi Minh's Thought) - 2(2-0-0-4) - Học kỳ 5
+6 - EM1170 - Pháp luật đại cương (General Law) - 2(2-0-0-4) - Học kỳ 1
+
+Giáo dục thể chất (Physical Education) - 5 tín chỉ
+7 - PE1014 - Lý luận thể dục thể thao (Theory in Sport) - 1(0-0-2-0)
+8 - PE1024 - Bơi lội (Swimming) - 1(0-0-2-0)
+9 - Tự chọn thể dục 1 (Elective course 1) - 1(0-0-2-0)
+10 - Tự chọn thể dục 2 (Elective course 2) - 1(0-0-2-0)
+11 - Tự chọn thể dục 3 (Elective course 3) - 1(0-0-2-0)
+
+Giáo dục Quốc phòng - An ninh (165 tiết) (Military Education)
+12 - MIL1110 - Đường lối quân sự của Đảng (Vietnam Communist Party's Direction on the National Defense) - 0(3-0-0-6)
+13 - MIL1120 - Công tác quốc phòng, an ninh (Introduction to the National Defense) - 0(3-0-0-6)
+14 - MIL1130 - QS chung và chiến thuật, kỹ thuật bắn súng tiểu liên AK (CKC) (General Military Education) - 0(3-2-0-8)
+
+Tiếng Anh (English) - 6 tín chỉ
+15 - FL1100 - Tiếng Anh I (English I) - 3(0-6-0-6) - Học kỳ 1
+16 - FL1101 - Tiếng Anh II (English II) - 3(0-6-0-6) - Học kỳ 2
+
+Khối kiến thức Toán và Khoa học cơ bản (Mathematics and basic sciences) - 32 tín chỉ
+17 - MI1111 - Giải tích I (Calculus I) - 4(3-2-0-8) - Học kỳ 1
+18 - MI1121 - Giải tích II (Calculus II) - 3(2-2-0-6) - Học kỳ 2
+19 - MI1131 - Giải tích III (Calculus III) - 3(2-2-0-6) - Học kỳ 3
+20 - MI1141 - Đại số (Algebra) - 4(3-2-0-8) - Học kỳ 1
+21 - MI2020 - Xác suất thống kê (Statistics) - 3(2-2-0-6) - Học kỳ 3
+22 - PH1110 - Vật lý đại cương I (Physics I) - 3(2-1-1-6) - Học kỳ 2
+23 - PH1120 - Vật lý đại cương II (Physics II) - 3(2-1-1-6) - Học kỳ 3
+24 - IT1110 - Tin học đại cương (Introduction to Computer Science) - 4(3-1-1-8) - Học kỳ 2
+25 - MI2010 - Phương pháp tính (Numerical Methods) - 2(2-0-0-4) - Học kỳ 3
+
+26 - IT3020 - Toán rời rạc (Discrete Math) - 3(3-1-0-6) - Học kỳ 3
+
+Cơ sở và cốt lõi ngành (Basic and Core of Engineering) - 48 tín chỉ
+27 - IT2000 - Nhập môn CNTT và TT (Introduction to Information and Communication Technology) - 3(2-0-2-6) - Học kỳ 1
+28 - IT3420 - Điện tử cho CNTT (Electronics for Information Technology) - 2(2-1-0-4) - Học kỳ 3
+29 - IT3011 - Cấu trúc dữ liệu và thuật toán (Data structure and Algorithms) - 2(2-1-0-4) - Học kỳ 4
+30 - IT3030 - Kiến trúc máy tính (Computer Architectures) - 3(3-1-0-6) - Học kỳ 4
+31 - IT3040 - Kỹ thuật lập trình (Programming techniques) - 2(2-0-1-4) - Học kỳ 5
+32 - IT3070 - Nguyên lý hệ điều hành (Operating Systems) - 3(3-1-0-6) - Học kỳ 4
+33 - IT3170 - Thuật toán ứng dụng (Applied Algorithms) - 2(2-0-1-4)
+34 - IT3080 - Mạng máy tính (Computer Networks) - 3(3-0-1-6) - Học kỳ 5
+35 - IT3090 - Cơ sở dữ liệu (Database) - 3(2-1-1-6) - Học kỳ 5
+36 - IT3100 - Lập trình hướng đối tượng (Object Oriented Programming) - 2(2-1-0-4) - Học kỳ 4
+37 - IT3150 - Project I (Project I) - 2(0-0-4-8) - Học kỳ 5
+38 - IT4593 - Nhập môn Kỹ thuật truyền thông (Introduction to Communication Engineering) - 2(2-1-0-4) - Học kỳ 5
+39 - IT4172 - Xử lý tín hiệu (Signal Processing) - 2(2-1-0-4) - Học kỳ 5
+40 - IT3120 - Phân tích thiết kế hệ thống (System analysis and design) - 2(2-1-0-4) - Học kỳ 6
+41 - IT4060 - Lập trình mạng (Network Programming) - 2(2-1-0-4) - Học kỳ 6
+42 - IT3180 - Nhập môn công nghệ phần mềm (Introduction to Software Engineering) - 3(2-2-0-6) - Học kỳ 5
+43 - IT4015 - Nhập môn an toàn thông tin (Introduction to Information Security) - 3(3-1-0-6) - Học kỳ 6
+44 - IT3931 - Project II (Project II) - 2(0-0-4-8) - Học kỳ 6
+45 - IT4611 - Các hệ thống phân tán và ứng dụng (Distributed Systems and Applications) - 2(2-1-0-4) - Học kỳ 7
+46 - IT3943 - Project III (Project III) - 3(0-0-6-12) - Học kỳ 7
+
+Kiến thức bổ trợ (Soft skills) - 9 tín chỉ
+Bắt buộc (Mandatory)
+47 - IT2030 - Technical Writing and Presentation - 3(2-2-0-6)
+
+Tự chọn (Elective)
+48 - EM1010 - Quản trị học đại cương (Introduction to Management) - 2(2-1-0-4)
+49 - EM1180 - Văn hóa kinh doanh và tinh thần khởi nghiệp (Business Culture and Entrepreneurship) - 2(2-1-0-4)
+50 - ED3280 - Tâm lý học ứng dụng (Applied Psychology) - 2(1-2-0-4)
+51 - ED3220 - Kỹ năng mềm (Soft Skills) - 2(1-2-0-4)
+52 - ET3262 - Tư duy công nghệ và thiết kế kỹ thuật (Technology and Technical Design Thinking) - 2(1-2-0-4)
+53 - TEX3123 - Thiết kế mỹ thuật công nghiệp - 2(1-2-0-4)
+
+Tự chọn theo định hướng ứng dụng (Elective Module)
+
+Mô đun 1: Hệ thống nhúng và IoT (Module 1: Embedded Systems and IoT) - 16 tín chỉ
+54 - IT4210 - Hệ nhúng (Embedded Systems) - 3(3-0-1-6) - Học kỳ 6
+55 - IT4785 - Phát triển ứng dụng cho thiết bị di động (Mobile Programming) - 2(2-1-0-4) - Học kỳ 5
+56 - IT4735 - IoT và ứng dụng (IoT and Applications) - 2(2-1-0-4) - Học kỳ 7
+57 - IT4651 - Thiết kế và triển khai mạng IP (IP Network Design and Implementation) - 3(2-0-2-6) - Học kỳ 6
+58 - IT4409 - Công nghệ Web và dịch vụ trực tuyến (Web technologies and e-Services) - 3(2-2-0-6) - Học kỳ 7
+59 - IT4931 - Lưu trữ và xử lý dữ liệu lớn (Bigdata storage and processing) - 3(3-1-0-6) - Học kỳ 8
+
+Mô đun 2: Mạng máy tính và Truyền thông dữ liệu (Module 2: Computer Networks and Data communications) - 16 tín chỉ
+60 - IT4651 - Thiết kế và triển khai mạng IP (IP Network Design and Implementation) - 3(2-0-2-6) - Học kỳ 6
+61 - IT4409 - Công nghệ Web và dịch vụ trực tuyến (Web technologies and e-Services) - 3(2-2-0-6) - Học kỳ 7
+62 - IT4735 - IoT và ứng dụng (IoT and Applications) - 2(2-1-0-4) - Học kỳ 7
+63 - IT4681 - Truyền thông đa phương tiện (Multimedia Communication) - 3(2-1-1-6) - Học kỳ 7
+64 - IT4263 - An ninh mạng (Network Security) - 3(2-0-2-6) - Học kỳ 7
+65 - IT4785 - Phát triển ứng dụng cho thiết bị di động (Mobile Programming) - 2(2-1-0-4) - Học kỳ 5
+
+Mô đun 3: An toàn thông tin (Module 3: Information Security) - 16 tín chỉ
+66 - IT4025 - Mật mã ứng dụng (Applied Cryptography) - 3(3-1-0-6) - Học kỳ 7
+67 - IT4263 - An ninh mạng (Network Security) - 3(2-0-2-6) - Học kỳ 7
+68 - IT4785 - Phát triển ứng dụng cho thiết bị di động (Mobile Programming) - 2(2-1-0-4) - Học kỳ 5
+69 - IT4651 - Thiết kế và triển khai mạng IP (IP Network Design and Implementation) - 3(2-0-2-6) - Học kỳ 6
+70 - IT4409 - Công nghệ Web và dịch vụ trực tuyến (Web technologies and e-Services) - 3(2-2-0-6) - Học kỳ 7
+71 - IT4831 - Phòng chống tấn công mạng (Network Attack and Defense) - 2(2-0-1-4) - Học kỳ 8
+
+Thực tập kỹ thuật và Đồ án tốt nghiệp Cử nhân (Engineering Internship and Bachelor Thesis) - 8 tín chỉ
+72 - IT4991 - Thực tập kỹ thuật (Engineering Internship) - 2(0-0-4-4) - Học kỳ 7
+73 - IT4997 - Đồ án tốt nghiệp Cử nhân (Bachelor Thesis) - 6(0-0-12-12) - Học kỳ 8
+
+# 4. Mô tả tóm tắt học phần (Course Outlines)
+
+4.1 Các học phần thuộc khối kiến thức Giáo dục đại cương (General Education
+Courses)
+
+## SSH1110 Những nguyên lý cơ bản của chủ nghĩa Mác-Lênin I (Fundamental Principles of Marxism- Leninism I)
+
+\- Khối lượng (Credits): 2(2-1-0-4)
+
+\- Học phần tiên quyết (Prerequisite): Không (None)
+
+\- Học phần học trước (Pre-courses): Không (None)
+
+\- Học phần song hành: (Corequisite Courses): Không (None)
+
+Mục tiêu:
+
+Cung cấp cho sinh viên những cơ sở lý luận cơ bản nhất để từ đó có thể tiếp cận được nội
+dung môn học Tư tưởng Hồ Chí Minh và Đường lối cách mạng của Đảng Cộng sản Việt
+Nam, hiểu biết nền tảng tư tưởng của Đảng; Xây dựng niềm tin, lý tưởng cách mạng cho sinh
+viên; Từng bước xác lập thế giới quan, nhân sinh quan và phương pháp luận chung nhất để
+tiếp cận các khoa học chuyên ngành được đào tạo.
+
+Objectives: Providing students with the most basic rationale from which to access the content of Ho Chi Minh
+Thought and the Revolution Policy of Vietnamese Communist Party courses, understanding the Party's
+ideological foundation; Building trust, revolutionary ideals for students; Step by step establishes the most
+general worldview, ecology and methodology to reach the professional majors.
+
+Nội dung:
+
+Giới thiệu khái lược về chủ nghĩa Mác-Lênin và một số vấn đề chung của môn học. Những
+nội dung cơ bản về thế giới quan và phương pháp luận của chủ nghĩa Mác-Lênin.
+
+Contents: Introducing the concept of Marxism-Leninism and some general issues of the course. Basics of the
+worldview and methodology of Marxism-Leninism.
+
+## SSH1120 Những nguyên lý cơ bản của chủ nghĩa Mác-Lênin II (Fundamental Principles of Marxism- Leninism II)
+
+\- Khối lượng (Credits): 3(2-1-0-6)
+
+\- Học phần tiên quyết (Prerequisite): Không (None)
+
+\- Học phần học trước (Pre-courses): SSH1110
+
+\- Học phần song hành (Corequisite Courses): Không (None)
+
+Mục tiêu:
+
+Cung cấp cho sinh viên những hiểu biết về các nguyên lý cơ bản của chủ nghĩa Mác-Lênin từ
+đó xác lập cơ sở lý luận để có thể tiếp cận nội dung môn học Tư tưởng Hồ Chí Minh và môn
+học Đường lối cách mạng của Đảng Cộng sản Việt Nam. Từng bước xác lập thế giới quan,
+phương pháp luận chung nhất để sinh viên tiếp cận các khoa học chuyên ngành được đào tạo.
+Xây dựng, phát triển nhân sinh quan cách mạng và tu dưỡng đạo đức con người mới.
+
+Objectives: Providing students with an understanding of the basic principles of Marxism-Leninism from which to
+establish a basic rationale to be able to access the content of Ho Chi Minh's Thought and the Revolution Policy
+of Vietnamese Communist Party courses. Step by step establishing the most general worldview and methodology
+for students to reach the professional majors. Developing revolutionary outlook on life and cultivating new
+human morality.
