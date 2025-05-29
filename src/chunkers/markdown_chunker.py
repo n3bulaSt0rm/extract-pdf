@@ -3,6 +3,7 @@ import os
 from typing import List, Dict, Optional, Tuple
 import json
 from datetime import datetime
+import re
 
 class MarkdownChunker:
     """
@@ -36,6 +37,32 @@ class MarkdownChunker:
         self.header_splitter = MarkdownHeaderTextSplitter(
             headers_to_split_on=self.headers_to_split_on
         )
+        
+        # Compile regex patterns for better performance
+        self.standalone_numbered_pattern = re.compile(r'^\s*\d+[\\]?\.\s*$', re.MULTILINE)
+        self.start_of_line_numbered_pattern = re.compile(r'^\s*\d+[\\]?\.\s*', re.MULTILINE)
+        self.empty_lines_pattern = re.compile(r'\n\s*\n')
+    
+    def preprocess_text(self, text: str) -> str:
+        """
+        Preprocess text to handle numbered items and clean up content.
+        
+        Args:
+            text: The input text to preprocess
+            
+        Returns:
+            Preprocessed text with cleaned numbered items
+        """
+        # Remove standalone numbered items (both escaped and non-escaped)
+        text = self.standalone_numbered_pattern.sub('', text)
+        
+        # Clean up any remaining numbered items at the start of lines
+        text = self.start_of_line_numbered_pattern.sub('', text)
+        
+        # Remove empty lines
+        text = self.empty_lines_pattern.sub('\n', text)
+        
+        return text.strip()
     
     def chunk_text(self, text: str) -> List[Dict]:
         """
@@ -47,18 +74,20 @@ class MarkdownChunker:
         Returns:
             A list of dictionaries where each dictionary represents a chunk with metadata.
         """
+        # Preprocess text to clean up numbered items
+        text = self.preprocess_text(text)
+        
         # Split by headers only
         header_splits = self.header_splitter.split_text(text)
         return header_splits
     
-    def save_chunks(self, chunks: List[Dict], output_file: str, source_document: str = None):
+    def save_chunks(self, chunks: List[Dict], output_file: str):
         """
         Save chunks to a JSON file.
         
         Args:
             chunks: List of document chunks with metadata.
             output_file: Path to the output file.
-            source_document: Path to the source document.
         """
         # Convert chunks to serializable format
         serializable_chunks = []
@@ -71,10 +100,6 @@ class MarkdownChunker:
                 "content": content,
                 "metadata": chunk.metadata
             }
-            
-            # Add source document if provided
-            if source_document:
-                chunk_data["source"] = source_document
             
             serializable_chunks.append(chunk_data)
         
@@ -115,15 +140,15 @@ def process_markdown_file(
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
     
     # Save chunks to file
-    chunker.save_chunks(chunks, output_file, source_document=input_file)
+    chunker.save_chunks(chunks, output_file)
     
     return len(chunks)
 
 
 if __name__ == "__main__":
     # Example usage
-    input_file = "src/data/quyche_converted.txt"
-    output_file = "src/data/quyche_chunks.json"
+    input_file = "src/data/converted_pdf_extraction_12f371bf-3fd8-4205-b06e-8346c8f40ad2.txt"
+    output_file = "src/data/markdown_12f371bf-3fd8-4205-b06e-8346c8f40ad2.json"
     
     num_chunks = process_markdown_file(
         input_file=input_file,

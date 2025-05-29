@@ -1,108 +1,117 @@
-# Enhanced PDF Extractor with Table Support and OCR
+# Vietnamese RAG System
 
-This tool provides enhanced PDF text extraction with support for:
-- Improved table extraction
-- Support for scanned PDFs with OCR
-- Direct image-to-text extraction
-
-## Requirements
-
-- Python 3.10+
-- Tesseract OCR installed on your system
-- GPU support (optional, for faster processing)
-
-## Installation
-
-1. Install Python dependencies:
-```bash
-pip install -r requirements.txt
-```
-
-2. Install Tesseract OCR:
-   - Windows: Download and install from https://github.com/UB-Mannheim/tesseract/wiki
-   - Linux: `sudo apt-get install tesseract-ocr`
-   - macOS: `brew install tesseract`
-
-3. For GPU acceleration (recommended for speed):
-   - Install NVIDIA drivers from: https://www.nvidia.com/Download/index.aspx
-   - Install CUDA Toolkit from: https://developer.nvidia.com/cuda-downloads
-   - Run our setup script to install the correct PyTorch version:
-     ```bash
-     # On Windows
-     setup_cuda.bat
-     
-     # On Linux/macOS
-     python setup_cuda.py
-     ```
-
-## Usage
-
-### Extract Text from PDFs (including scanned documents)
-
-```python
-from src.extractors.docling.main import extract_text_from_pdf
-
-# Extract text from a PDF with tables and OCR support
-extract_text_from_pdf(
-    pdf_path="path/to/your/document.pdf",
-    output_path="path/to/output.txt",
-    preserve_tables=True,  # Set to False if you don't need tables
-    handle_scanned=True    # Set to False for digital PDFs only
-)
-```
-
-### Extract Text from Images
-
-```python
-from src.extractors.docling.main import extract_text_from_image
-
-# Extract text from an image
-extract_text_from_image(
-    image_path="path/to/your/image.png",
-    output_path="path/to/output.txt"
-)
-```
+This is a Vietnamese Retrieval-Augmented Generation (RAG) system optimized for CUDA acceleration with a focus on accuracy. The system can embed and retrieve Vietnamese text chunks with high precision using semantic search and BM25 ranking.
 
 ## Features
 
-### Table Extraction
-- The extractor preserves table structures in Markdown format
-- Improved cell matching for better table recognition
-- Works for both digital and scanned PDFs
+- CUDA-accelerated embedding and retrieval for high performance
+- Hybrid ranking combining semantic similarity and BM25 scoring
+- Memory-efficient batching for optimal GPU utilization
+- Automatic context expansion for better results
+- Half-precision (FP16) optimization when supported
 
-### OCR Support
-- Integrated Tesseract OCR for scanned documents
-- Full-page OCR option for improved recognition
-- GPU acceleration for faster processing when available
+## Setup
 
-### CUDA Support
-- GPU acceleration for significantly faster processing
-- Automatic detection of CUDA availability
-- Enhanced performance for large documents and complex tables
+### Prerequisites
 
-## Command-line Usage
+- Python 3.8+
+- PyTorch with CUDA support
+- Qdrant vector database (running locally or remote)
+- Sentence Transformers
 
-You can run the extractor directly:
+### Installation
 
+1. Clone the repository:
 ```bash
-python -m src.extractors.docling.main
+git clone [repository-url]
+cd [repository-directory]
 ```
 
-This will process the default files specified in the script. Edit the `main()` function to customize paths.
+2. Install the required dependencies:
+```bash
+pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu118
+pip install sentence-transformers qdrant-client numpy
+```
 
-## Troubleshooting CUDA Issues
+3. Set up the directories:
+```bash
+python setup_dirs.py
+```
 
-If you encounter issues with CUDA:
+4. Place your data file in the data directory:
+```
+src/data/final_chunks_9d631398-eae9-4493-8a48-575cb2b92ab0.json
+```
 
-1. Run the CUDA verification script:
-   ```bash
-   python setup_cuda.py
-   ```
+## Usage
 
-2. Make sure your NVIDIA drivers are up-to-date
+### Running the Example
 
-3. Ensure you have the correct PyTorch version for your CUDA version:
-   ```bash
-   # Test CUDA availability
-   python -c "import torch; print(torch.cuda.is_available())"
-   ``` 
+```bash
+python run_example.py
+```
+
+This will:
+1. Initialize the embedding module
+2. Load and embed chunks from the data file
+3. Store them in Qdrant
+4. Run example queries with hybrid ranking
+5. Display the results
+
+### Using the API
+
+```python
+from src.embedders.text_embedder import VietnameseEmbeddingModule
+from src.retrievers.qdrant_retriever import VietnameseQueryModule, RankingConfig
+
+# Initialize embedding module
+embedding_module = VietnameseEmbeddingModule(
+    qdrant_host="localhost",
+    qdrant_port=6333,
+    collection_name="vietnamese_chunks_test",
+    model_name="bkai-foundation-models/vietnamese-bi-encoder"
+)
+
+# Load and embed chunks
+embedding_module.load_and_embed_chunks("path/to/chunks.json")
+
+# Initialize query module
+config = RankingConfig(
+    semantic_weight=0.7,
+    bm25_weight=0.3,
+    similarity_threshold=0.6,
+    min_score_threshold=0.2
+)
+
+query_module = VietnameseQueryModule(
+    embedding_module=embedding_module,
+    config=config
+)
+
+# Query
+results = query_module.query("Your query here", top_k=5)
+
+# Process results
+for result in results:
+    print(f"Score: {result['score']}")
+    print(f"Content: {result['combined_content']}")
+```
+
+## Architecture
+
+The system consists of the following components:
+
+- **CUDA Management**: Handles GPU acceleration and memory management
+- **Qdrant Operations**: Manages vector database operations
+- **Text Embedding**: Converts text into vector embeddings
+- **Query Processing**: Performs semantic search and hybrid ranking
+
+## Performance Optimization
+
+The system includes several optimizations for high performance:
+
+1. **CUDA Acceleration**: Uses GPU for fast vector operations
+2. **Memory Management**: Dynamic batch sizing based on text length
+3. **FP16 Precision**: Uses half-precision when available
+4. **Efficient Vector Operations**: Optimized matrix multiplications
+5. **Automatic Cleanup**: Prevents memory leaks and OOM errors 

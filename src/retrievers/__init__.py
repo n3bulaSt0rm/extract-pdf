@@ -1,48 +1,23 @@
 """
-Document Retrievers for RAG Pipeline
+Retriever modules for Vietnamese RAG System
 
-This package contains retriever implementations for the RAG pipeline.
+This module contains retrievers for querying embeddings and retrieving
+relevant text based on semantic similarity.
 """
 
-from src.retrievers.qdrant_retriever import QdrantRetriever
-from src.retrievers.config import DEFAULT_CONFIG
+# Import class chính từ file qdrant_retriever.py
+from .qdrant_retriever import VietnameseQueryModule, RankingConfig
 
-def create_qdrant_retriever(config=None):
-    """
-    Create a Qdrant retriever with the given configuration.
-    If no config is provided, use the default configuration.
-    
-    Args:
-        config (dict, optional): Configuration dictionary
-        
-    Returns:
-        QdrantRetriever: Initialized Qdrant retriever
-    """
-    if config is None:
-        config = DEFAULT_CONFIG
-    else:
-        # Merge with defaults for any missing keys
-        merged_config = DEFAULT_CONFIG.copy()
-        merged_config.update(config)
-        config = merged_config
-    
-    # Import here to avoid circular dependencies
-    from qdrant_client import QdrantClient
-    
-    # Create Qdrant client
-    client = QdrantClient(
-        host=config["host"],
-        port=config["port"],
-        timeout=config.get("timeout", 10.0)
-    )
-    
-    # Create retriever
-    return QdrantRetriever(
-        client=client,
-        collection_name=config["collection_name"],
-        top_k=config["top_k"],
-        similarity_threshold=config["similarity_threshold"],
-        use_reranking=config["use_reranking"]
-    )
+# Để code cũ không bị lỗi, có thể cung cấp một alias
+QdrantRetriever = VietnameseQueryModule
 
-__all__ = ["QdrantRetriever", "create_qdrant_retriever", "DEFAULT_CONFIG"] 
+# Hoặc bỏ hoàn toàn nếu không cần thiết
+# from retrievers.config import DEFAULT_CONFIG 
+
+# Xuất module cho package
+__all__ = ["VietnameseQueryModule", "QdrantRetriever", "RankingConfig"]
+
+from .query_module import VietnameseQueryModule, create_query_module
+from .config import RankingConfig
+
+__all__ = ['VietnameseQueryModule', 'create_query_module', 'RankingConfig'] 

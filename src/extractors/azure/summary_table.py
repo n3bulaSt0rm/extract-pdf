@@ -19,7 +19,7 @@ from langchain_core.documents import Document
 load_dotenv()
 
 # DeepSeek API configuration
-DEEPSEEK_API_KEY = "sk-24fe674f3e79405ab9f278643a6a0cb1"
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 # Output directory configuration
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
@@ -282,7 +282,7 @@ def process_file(input_file, output_file=None):
         
         # Create output file path if not provided
         if not output_file:
-            output_path = input_path.with_stem(f"{input_path.stem}_converted")
+            output_path = input_path.with_stem(f"converted_{input_path.stem}")
         else:
             output_path = Path(output_file)
         
@@ -344,7 +344,7 @@ if __name__ == "__main__":
         print("Installation complete.")
     
     # Get input file path
-    input_file = sys.argv[1] if len(sys.argv) > 1 else str(DATA_DIR / "course.txt")
+    input_file = sys.argv[1] if len(sys.argv) > 1 else str(DATA_DIR / "pdf_extraction_12f371bf-3fd8-4205-b06e-8346c8f40ad2.txt")
     
     # Process the file
     output_file = process_file(input_file)
