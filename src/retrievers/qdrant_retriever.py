@@ -299,8 +299,18 @@ JSON:"""
                 if chunk_keywords:
                     metadata_matches = 0
                     for keyword in keywords:
-                        if keyword.lower() in [k.lower() for k in chunk_keywords]:
-                            metadata_matches += 1
+                        keyword_lower = keyword.lower()
+                        for k in chunk_keywords:
+                            # Check if k is a string before calling lower()
+                            if isinstance(k, str) and keyword_lower in k.lower():
+                                metadata_matches += 1
+                                break
+                            # Handle case where k might be a list
+                            elif isinstance(k, list):
+                                for item in k:
+                                    if isinstance(item, str) and keyword_lower in item.lower():
+                                        metadata_matches += 1
+                                        break
                     
                     if metadata_matches > 0:
                         boost_factor *= (self.config.metadata_keyword_boost ** metadata_matches)
@@ -640,35 +650,27 @@ if __name__ == "__main__":
             adjacent_after=3,
             
             # Results per query
-            results_per_query=3
+            results_per_query=5
         )
         
         # Create embedding module
         embedding_module = VietnameseEmbeddingModule(
             qdrant_host="localhost",
             qdrant_port=6333,
-            collection_name="vietnamese_chunks",
+            collection_name="vietnamese_chunks_test",
             model_name="bkai-foundation-models/vietnamese-bi-encoder"
         )
         
         query_module = create_query_module(
             embedding_module=embedding_module,
-            deepseek_api_key=deepseek_api_key,
+            deepseek_api_key="sk-672e4caa35f14a1aa658e1f382393cbd",
             deepseek_model="deepseek-chat",
             config=config
         )
         
         # Test email
         test_email = """
-Xin chào,
-
-Tôi là sinh viên năm cuối và có một số câu hỏi về đồ án tốt nghiệp:
-
-1. Cách tính điểm quá trình đồ án tốt nghiệp như thế nào?
-2. Thời gian nộp báo cáo đồ án cuối kỳ là khi nào?
-3. Có cần đăng ký chương trình kỹ sư tài năng không?
-
-Cảm ơn thầy/cô!
+        điều kiện tốt nghiệp 
         """
         
         results = query_module.process_email(test_email)

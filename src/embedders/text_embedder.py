@@ -281,7 +281,7 @@ if __name__ == "__main__":
         
         if os.path.exists(data_file):
             # Define program-specific keywords
-            program_keywords = ["đồ án", "chương trình học", "HUST", "đại học bách khoa"]
+            program_keywords = ["chương trình đào tạo kỹ thuật máy tính", "kỹ thuật máy tính","IT2"],
             
             # Embed with keywords
             embedding_module.load_and_embed_chunks(

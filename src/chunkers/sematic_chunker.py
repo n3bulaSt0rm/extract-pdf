@@ -160,8 +160,8 @@ def process_markdown_semantic_chunks(
 
 if __name__ == "__main__":
     # Example usage
-    input_file = "src/data/markdown_12f371bf-3fd8-4205-b06e-8346c8f40ad2.json"
-    output_file = "src/data/final_chunks_12f371bf-3fd8-4205-b06e-8346c8f40ad2.json"
+    input_file = "src/data/markdown_9d631398-eae9-4493-8a48-575cb2b92ab0.json"
+    output_file = "src/data/final_chunks_9d631398-eae9-4493-8a48-575cb2b92ab0.json"
     
     try:
         num_chunks = process_markdown_semantic_chunks(

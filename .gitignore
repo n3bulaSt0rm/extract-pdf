@@ -6,4 +6,5 @@ __pycache__
 *.pyz
 
 .venv
+.venv.production
 .env

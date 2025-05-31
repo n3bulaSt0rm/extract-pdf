@@ -4,20 +4,6 @@ torchvision==0.18.0+cu121
 torchaudio==2.3.0+cu121
 --find-links https://download.pytorch.org/whl/cu121/torch_stable.html
 
-# # Docling requirements
-# docling==2.32.0
-# docling-ibm-models==3.4.3
-
-# # Fix compatibility issues
-# numpy==1.26.4  # Phiên bản đúng để tránh lỗi tương thích
-
-# # Additional requirements for PDF processing
-# regex
-# pandas
-# pillow
-# tqdm
-# pdf2image==1.17.0  # Chuyển đổi PDF thành hình ảnh
-
 # Requirements for loading model files
 huggingface_hub>=0.23.0
 
@@ -32,10 +18,23 @@ requests>=2.31.0
 sentence-transformers>=2.2.2
 
 # Vietnamese embedding requirements
-numpy>=1.25.0
+numpy==1.26.4
 tqdm>=4.65.0
 transformers>=4.30.0 
 
-nltk
-underthesea
 qdrant_client
+
+uvicorn
+fastapi
+python-jose
+python-multipart
+pika
+pandas
+boto3
+tabulate
+nltk
+PyPDF2
+
+google-auth
+google-api-python-client
+google-auth-oauthlib
